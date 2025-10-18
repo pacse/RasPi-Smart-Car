@@ -1,4 +1,4 @@
-from .base import ADC
+from .core import ADC
 import time
 
 class Photoresistor:
