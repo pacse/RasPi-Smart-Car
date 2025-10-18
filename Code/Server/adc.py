@@ -1,6 +1,6 @@
 """
 What this does (my best understanding):
-Reads the values from the Ultrasonic Module
+Magic (don't ask where the IRD's are ¯\_(ツ)_/¯)
 
 Credit to original authors and Claude Sonnet 3.5
 for helping me understand and clarify the code
@@ -181,9 +181,11 @@ if __name__ == '__main__':
                 left_idr = adc.read_adc(0)   # Read left photoresistor value
                 right_idr = adc.read_adc(1)  # Read right photoresistor value
                 power = adc.read_voltage()   # Read power voltage
-                print((
-                    f'Left IDR: {left_idr}V, Right IDR: {right_idr}V, Power: {power}V'
-                    ), end='\r', flush=True) # Print values on one updating line
+                print((                      # Print values on one updating line
+                    f'Left IDR: {left_idr}V, '
+                    f'Right IDR: {right_idr}V, '
+                    f'Power: {power}V'
+                    ), end='\r', flush=True)
 
             except RuntimeError as e:        # Handle runtime errors
                 print(f'Error reading ADC: {e}')
