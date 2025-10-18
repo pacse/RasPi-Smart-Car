@@ -7,7 +7,7 @@ for helping me understand and clarify the code
 """
 
 import smbus                             # smbus for I2C communication
-from ..parameter import ParameterManager  # ParameterManager class from the parameter module
+from ...parameter import ParameterManager  # ParameterManager class from the parameter module
 
 
 class ADC:
