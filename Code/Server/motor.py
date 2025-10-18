@@ -1,19 +1,25 @@
+"""
+Motor control module using PCA9685 PWM driver.
+"""
+
 import time
 from pca9685 import PCA9685
 
 class Ordinary_Car:
+
     def __init__(self):
         self.pwm = PCA9685(0x40, debug=True)
         self.pwm.set_pwm_freq(50)
+
     def duty_range(self, duty1, duty2, duty3, duty4):
         if duty1 > 4095:
             duty1 = 4095
         elif duty1 < -4095:
-            duty1 = -4095        
+            duty1 = -4095
         if duty2 > 4095:
             duty2 = 4095
         elif duty2 < -4095:
-            duty2 = -4095  
+            duty2 = -4095
         if duty3 > 4095:
             duty3 = 4095
         elif duty3 < -4095:
@@ -75,15 +81,15 @@ class Ordinary_Car:
         self.pwm.close()
 
 if __name__=='__main__':
-    PWM = Ordinary_Car()          
+    PWM = Ordinary_Car()
     try:
         PWM.set_motor_model(2000,2000,2000,2000)       #Forward
         time.sleep(1)
         PWM.set_motor_model(-2000,-2000,-2000,-2000)   #Back
         time.sleep(1)
-        PWM.set_motor_model(-2000,-2000,2000,2000)     #Left 
+        PWM.set_motor_model(-2000,-2000,2000,2000)     #Left
         time.sleep(1)
-        PWM.set_motor_model(2000,2000,-2000,-2000)     #Right    
+        PWM.set_motor_model(2000,2000,-2000,-2000)     #Right
         time.sleep(1)
         PWM.set_motor_model(0,0,0,0)                   #Stop
     except KeyboardInterrupt:  # When 'Ctrl+C' is pressed, the child program destroy() will be  executed.
