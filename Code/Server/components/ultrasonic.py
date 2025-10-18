@@ -1,16 +1,19 @@
-from gpiozero import DistanceSensor, PWMSoftwareFallback, DistanceSensorNoEcho
-import warnings
-import time
+from .. import GPIO
 
 class Ultrasonic:
+    """
+    Ultrasonic distance sensor class using GPIO pins.
+    """
+
     def __init__(self, trigger_pin: int = 27, echo_pin: int = 22, max_distance: float = 3.0):
-        # Initialize the Ultrasonic class and set up the distance sensor.
-        warnings.filterwarnings("ignore", category = DistanceSensorNoEcho)
-        warnings.filterwarnings("ignore", category = PWMSoftwareFallback)  # Ignore PWM software fallback warnings
-        self.trigger_pin = trigger_pin  # Set the trigger pin number
-        self.echo_pin = echo_pin        # Set the echo pin number
+        """
+        Initialize the Ultrasonic sensor.
+        """
+        self.TRIG = trigger_pin  # Set the trigger pin number
+        self.ECHO = echo_pin      # Set the echo pin number
         self.max_distance = max_distance  # Set the maximum distance
-        self.sensor = DistanceSensor(echo=self.echo_pin, trigger=self.trigger_pin, max_distance=self.max_distance)  # Initialize the distance sensor
+
+        self.sensor = DistanceSensor(echo=self.ECHO, trigger=self.TRIG, max_distance=self.max_distance)  # Initialize the distance sensor
 
     def __enter__(self):
         return self
