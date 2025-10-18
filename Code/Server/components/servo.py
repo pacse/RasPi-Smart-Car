@@ -81,6 +81,11 @@ class Servo:
         self.pwm_servo.set_servo_pulse((channel + 8), pulse)
 
 
+    def cleanup(self) -> None:
+        """Cleanup the servo controller."""
+        self.pwm_servo.cleanup()
+
+
 # Main program logic follows:
 if __name__ == '__main__':
     """
