@@ -118,23 +118,6 @@ class PCA9685:
         self.write(self.__LED0_OFF_L + 4 * channel, off & 0xFF)
         self.write(self.__LED0_OFF_H + 4 * channel, off >> 8)
 
-    def set_motor_pwm(self, channel: int, duty: int) -> None:
-        """
-        Sets the PWM duty cycle for a motor.
-
-        Args:
-            channel: Motor channel number (0-15)
-            duty: PWM duty cycle (0-4095)
-                 0 = full off
-                 4095 = full on
-
-        Raises:
-            ValueError: If parameters are out of range
-        """
-        # validation in set_pwm
-        self.set_pwm(channel, 0, duty)
-
-
     def set_servo_pulse(self, channel: int, pulse: float) -> None:
         """Sets the Servo Pulse, The PWM frequency must be 50HZ."""
         pulse = pulse * 4096 / 20000        # PWM frequency is 50HZ, the period is 20000us
