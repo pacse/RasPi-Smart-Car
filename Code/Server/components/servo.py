@@ -1,4 +1,4 @@
-from .components.base import PCA9685
+from .core import PCA9685
 
 class Servo:
     """
