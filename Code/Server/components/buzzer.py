@@ -1,4 +1,4 @@
-from .__init__ import GPIO
+from .. import GPIO
 
 class Buzzer:
     """
