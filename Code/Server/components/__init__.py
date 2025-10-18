@@ -5,6 +5,7 @@ Classes for hardware components:
 - IR Sensors
 """
 
-from .adc import ADC
 from .buzzer import Buzzer
 from .infrared import Infrared
+from .photoresistor import Photoresistor
+from .servo import Servo
