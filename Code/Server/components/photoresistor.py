@@ -38,9 +38,9 @@ class Photoresistor:
             return None
 
 
-    def stop(self) -> None:
+    def cleanup(self) -> None:
         """Close the I2C bus."""
-        self.adc.close_i2c()
+        self.adc.cleanup()
 
 
 if __name__ == '__main__':
@@ -64,5 +64,7 @@ if __name__ == '__main__':
             time.sleep(0.3)
 
     except KeyboardInterrupt:
-        print('\nStopping . . .')
-        photoresistor.stop()
+        print('\nEnd of program')
+
+    finally:
+        photoresistor.cleanup()

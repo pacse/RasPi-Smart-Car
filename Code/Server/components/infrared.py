@@ -41,7 +41,7 @@ class Infrared:
         return (vals[0], vals[1], vals[2]) # Return as tuple
 
 
-    def close(self) -> None:
+    def cleanup(self) -> None:
         """Cleanup used GPIO pins."""
         for pin in self.IR_PINS:
             GPIO.cleanup(pin)
@@ -62,7 +62,10 @@ if __name__ == '__main__':
             infrared_value = infrared.read_all_infrared()
             print(f"Infrared value: {infrared_value}")
             sleep(0.5)
+
     except KeyboardInterrupt:
-        # Close the Infrared object and print a message when interrupted
-        infrared.close()
         print("\nEnd of program")
+
+    finally:
+        # cleanup on exit
+        infrared.cleanup()

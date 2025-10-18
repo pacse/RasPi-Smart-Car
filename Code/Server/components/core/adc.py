@@ -1,6 +1,6 @@
 """
 What this does (my best understanding):
-Magic (don't ask where the IRD's are ¯\_(ツ)_/¯)
+Magic (don't ask where the IRD's are ¯\\_(ツ)_/¯)
 
 Credit to original authors and Claude Sonnet 3.5
 for helping me understand and clarify the code
@@ -160,7 +160,7 @@ class ADC:
 
         return found_devices                                       # Return found addresses
 
-    def close_i2c(self) -> None:
+    def cleanup(self) -> None:
         """Close the I2C bus."""
         self.i2c_bus.close()
 
@@ -193,7 +193,7 @@ if __name__ == '__main__':
             sleep(1)                         # Wait 1s between reads
 
     except KeyboardInterrupt:
-        print('\nStopping program...')
+        print('\nEnd of program')
 
     finally:
-        adc.close_i2c()                      # Ensure I2C bus is always closed
+        adc.cleanup()                        # Ensure I2C bus is always cleaned up

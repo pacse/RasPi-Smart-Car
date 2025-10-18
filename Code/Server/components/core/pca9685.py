@@ -124,7 +124,7 @@ class PCA9685:
         self.set_pwm(channel, 0, int(pulse))
 
 
-    def close(self) -> None:
+    def cleanup(self) -> None:
         """Close the I2C bus."""
         self.bus.close()
 

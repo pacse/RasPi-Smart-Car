@@ -18,7 +18,7 @@ class Buzzer:
         GPIO.output(self.PIN, False)
 
 
-    def close(self) -> None:
+    def cleanup(self) -> None:
         """Cleanup the buzzer pin."""
         GPIO.cleanup(self.PIN)
 
@@ -38,5 +38,9 @@ if __name__ == '__main__':
             sleep(0.1)
             buzzer.off()
             sleep(0.1)
+
+    except KeyboardInterrupt:
+        print('\nEnd of program')
+
     finally:
-        buzzer.close()
+        buzzer.cleanup()
