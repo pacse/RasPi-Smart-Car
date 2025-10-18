@@ -6,29 +6,23 @@ Credit to original authors and Claude Sonnet 3.5
 for helping me understand and clarify the code
 """
 
-import smbus                            # smbus for I2C communication
-from parameter import ParameterManager  # ParameterManager class from the parameter module
+import smbus                             # smbus for I2C communication
+from .parameter import ParameterManager  # ParameterManager class from the parameter module
 
-from typing import Final
 
 class ADC:
     """
     Interface for ADS7830 Analog-to-Digital Converter.
-
-    Examples:
-        >>> adc = ADC()
-        >>> voltage = adc.read_adc(0)  # Read channel 0
-        >>> adc.close_i2c()
     """
 
     # === Initialization ===
 
     # Class constants
-    I2C_ADDRESS: Final = 0x48            # I2C address of the ADS7830
-    ADS7830_COMMAND: Final = 0x84        # command byte for ADS7830
-    MAX_CHANNEL: Final = 7               # Maximum channel number for ADS7830
-    VOLTAGE_COEFFICIENT_V1: Final = 3.3  # Voltage coefficient for PCB version 1
-    VOLTAGE_COEFFICIENT_V2: Final = 5.2  # Voltage coefficient for PCB version 2
+    I2C_ADDRESS = 0x48            # I2C address of the ADS7830
+    ADS7830_COMMAND = 0x84        # command byte for ADS7830
+    MAX_CHANNEL = 7               # Maximum channel number for ADS7830
+    VOLTAGE_COEFFICIENT_V1 = 3.3  # Voltage coefficient for PCB version 1
+    VOLTAGE_COEFFICIENT_V2 = 5.2  # Voltage coefficient for PCB version 2
 
     def __init__(self) -> None:
         """Initialize the ADC class."""
@@ -144,6 +138,7 @@ class ADC:
         """
         return self.read_adc(2) * (3 if self.pcb_version == 1 else 2)
 
+
     def scan_i2c_bus(self) -> list[int]:
         """
         Scan the I2C bus for connected devices.
@@ -171,6 +166,11 @@ class ADC:
 
 
 if __name__ == '__main__':
+    """
+    Test the ADC class:
+    Continuously read and print left & right
+    photoresistor values & power voltage
+    """
     from time import sleep
 
     print('Program is starting ... ')
