@@ -1,4 +1,4 @@
-import time
+'''import time
 from rpi_ws281x import Adafruit_NeoPixel, Color
 
 class Freenove_RPI_WS281X:
@@ -190,4 +190,4 @@ if __name__ == '__main__':
         else:
             led.led_close()
     except KeyboardInterrupt:
-        led.led_close()
+        led.led_close()'''
