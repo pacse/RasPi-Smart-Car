@@ -1,38 +1,52 @@
-from .core import PCA9685
+from gpiozero import Servo
+from gpiozero.pins.pigpio import PiGPIOFactory
 
-class Servo:
+class SensorArrayServos:
     """
-    Servo motor controller using PCA9685 PWM driver.
-
-    Handles up to 8 servo motors mapped to channels 8-15 on the PCA9685.
-    Channel 0 is treated as a special case with reversed pulse calculation. (I wonder why?)
+    Controller class for Camera & Ultrasonic sensor mount servos.
     """
 
-    # constants
-    PWM_FREQUENCY = 50     # Hz
-    INITIAL_PULSE = 1500   # microseconds
-    MIN_ANGLE     = 0      # degrees
-    MAX_ANGLE     = 180
-    VALID_MOTORS  = [i for i in range(0, 8)]
+    # === constants ===
+    MIN_ANGLE       = 0         # degrees
+    MAX_ANGLE       = 180
+    INITIAL_ANGLE   = 90
 
-    # PWM constants
-    MIN_PULSE   = 500      # microseconds
-    MAX_PULSE   = 2500     # microseconds
-    PULSE_RATIO = 0.09     # 4096 steps over 20ms
+    MIN_PULSE_WIDTH = 0.5/1000  # 500μs
+    MAX_PULSE_WIDTH = 2.5/1000  # 2500μs
+
+    VALID_MOTORS    = [0, 1]    # servo channels
+
+    # GPIO pins for servos TODO: SET PINS
+    SERVO_PINS = [
+                  17,  # Servo 0 - Camera Pan
+                  27,  # Servo 1 - Camera Tilt
+                 ]
 
 
     def __init__(self):
-        """Initialize the Servo controller."""
+        """Initialize Servo controller."""
 
         try:
-            self.pwm_servo = PCA9685(debug=True)
-            self.pwm_servo.set_pwm_freq(self.PWM_FREQUENCY)
+            # pigpio factory gives precise control
+            factory = PiGPIOFactory()
 
-            for channel in self.VALID_MOTORS:
-                self.pwm_servo.set_servo_pulse(channel + 8, self.INITIAL_PULSE)
+            self.servos = []
+
+            for pin in self.SERVO_PINS:
+
+                servo = Servo( # define gpiozero Servo instance
+                    pin,
+                    min_pulse_width=self.MIN_PULSE_WIDTH,
+                    max_pulse_width=self.MAX_PULSE_WIDTH,
+                    pin_factory=factory # use pigpio factory
+                )
+
+                servo.value = 0  # default to center (90°)
+
+                self.servos.append(servo)
 
         except Exception as e:
-            raise RuntimeError('Failed to initialize servo controller.') from e
+            raise RuntimeError('Failed to initialize servos:\n') from e
 
 
     # === validation ===
@@ -43,63 +57,75 @@ class Servo:
                 f'Valid channels are {self.VALID_MOTORS}.'
             ))
 
-    def _validate_angle(self, angle: int) -> None:
+    def _validate_angle(self, angle: float) -> None:
         if not self.MIN_ANGLE <= angle <= self.MAX_ANGLE:
             raise ValueError((
                 f'Invalid angle: {angle}. '
                 f'Valid angles are {self.MIN_ANGLE}-{self.MAX_ANGLE}.'
             ))
 
-    def set_servo_pwm(self, channel: int, angle: int, error: int = 10) -> None:
+
+    # === main methods ===
+    def set_angle(self, channel: int, angle: float) -> None:
         """
         Set servo position by angle.
 
-        Args:
-            channel: Servo channel (0-7)
-            angle: Desired angle (0-180 degrees)
-            error: Error correction value in degrees
+        :param channel: Servo channel (0-1)
+        :param angle: Desired angle (0-180 degrees)
 
-        Raises:
-            ValueError: If channel or angle is invalid
+        :raises ValueError: If channel or angle is invalid
         """
         # validation
-        channel = int(channel)
-        angle = int(angle)
         self._validate_angle(angle)
         self._validate_channel(channel)
 
-        # calculate pulse
-        modifier = int((angle + error) / self.PULSE_RATIO)
+        # set servo position
+        self.servos[channel].value = angle
 
-        if channel == 0: # reversed logic for some reason
-            pulse = self.MAX_PULSE - modifier
+    def set_joystick(self, x: float, y: float) -> None:
+        """
+        Sets servo positions based on joystick x and y values.
 
-        else:
-            pulse = self.MIN_PULSE + modifier
+        :param x: Joystick x-axis value (-1.0 to 1.0)
+        :param y: Joystick y-axis value (-1.0 to 1.0)
 
-        # set pulse
-        self.pwm_servo.set_servo_pulse((channel + 8), pulse)
+        :raises ValueError: If channel is invalid
+        """
 
+        # validation
+        if not (-1.0 <= x <= 1.0):
+            raise ValueError("x value must be between -1.0 and 1.0")
+
+        if not (-1.0 <= y <= 1.0):
+            raise ValueError("y value must be between -1.0 and 1.0")
+
+        # map -1.0 - 1.0 to 0° - 180°
+        x_val = (self.MAX_ANGLE / 2) * (x + 1)
+        y_val = (self.MAX_ANGLE / 2) * (y + 1)
+
+        self.set_angle(0, x_val)
+        self.set_angle(1, y_val)
 
     def cleanup(self) -> None:
-        """Cleanup the servo controller."""
-        self.pwm_servo.cleanup()
+        """Cleanup the servos."""
+        for servo in self.servos:
+            servo.close()
 
 
-# Main program logic follows:
-if __name__ == '__main__':
+def test():
     """
-    Test Servo class:
-    Rotate servos 0 & 1 to 90 degrees.
+    Test SensorArrayServos class:
+    Rotate servos to 90 degrees.
     """
-    print('Rotating servos to 90 degrees...')
 
-    pwm_servo = Servo()
+    print('Rotating to 90 degrees...')
+
+    servos = SensorArrayServos()
 
     try:
         while True:
-            pwm_servo.set_servo_pwm(0, 90)
-            pwm_servo.set_servo_pwm(1, 90)
+            servos.set_angle(0, 90)
+            servos.set_angle(1, 90)
 
     except KeyboardInterrupt:
         print('\nEnd of program.')
