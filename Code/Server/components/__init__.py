@@ -8,4 +8,4 @@ Classes for hardware components:
 from .buzzer import Buzzer
 from .infrared import Infrared
 from .photoresistor import Photoresistor
-from .servo import Servo
+from .servo import SensorArrayServos
