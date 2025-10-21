@@ -1,13 +1,15 @@
 from .core import ADC
 import time
 
+from typing import Optional
+
 class Photoresistor:
     def __init__(self):
         """Initialize the Photoresistor class"""
         self.adc = ADC()
 
 
-    def read_left_photoresistor(self) -> float | None:
+    def read_left_photoresistor(self) -> Optional[float]:
         """
         Read the value from the left photoresistor.
 
@@ -22,7 +24,7 @@ class Photoresistor:
             print(f"Error reading left photoresistor: {e}")
             return None
 
-    def read_right_photoresistor(self) -> float | None:
+    def read_right_photoresistor(self) -> Optional[float]:
         """
         Read the value from the right photoresistor.
 

@@ -1,3 +1,22 @@
-from Server.components.motors import core
+from Server.components import Buzzer, Infrared, Photoresistor, Servo
+from time import sleep
 
-test = core.Motor((13,15))
+import smbus
+print('Imported smbus')
+
+print('Buzzer init . . .')
+buzzer = Buzzer()
+
+buzzer.on()
+sleep(2)
+buzzer.off()
+sleep(2)
+
+print('Servo init . . .')
+pwm_servo = Servo()
+
+pwm_servo.set_servo_pwm(0,90)
+pwm_servo.set_servo_pwm(1,90)
+
+pwm_servo.cleanup()
+buzzer.cleanup()

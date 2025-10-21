@@ -4,7 +4,7 @@ Core motor components
 NOTE: Motors are controlled separately
 from the rest of the board components.
 """
-from .. import GPIO
+from ... import GPIO
 
 
 class Motor:
@@ -36,8 +36,8 @@ class Motor:
     # === Validation ===
     def _validate_speed(self, speed: int) -> None:
         """Ensure speed is within valid range (0-100)."""
-        if not (0 <= speed <= 100):
-            raise ValueError("Speed must be between 0 and 100")
+        if not (-100 <= speed <= 100):
+            raise ValueError("Speed must be between -100 and 100")
 
 
     # === Control functions ===
