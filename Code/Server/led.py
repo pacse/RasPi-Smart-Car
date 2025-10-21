@@ -1,4 +1,4 @@
-# -*-coding: utf-8 -*-
+'''# -*-coding: utf-8 -*-
 import time
 from parameter import ParameterManager
 from rpi_ledpixel import Freenove_RPI_WS281X
@@ -27,7 +27,7 @@ class Led:
             # Print an error message and disable LED function if unsupported combination
             print("Connect Version 1.0 is not supported on Raspberry PI 5.")
             self.is_support_led_function = False
-                    
+
         self.start = time.time()
         self.next = 0
         self.color_wheel_value = 100
@@ -75,7 +75,7 @@ class Led:
                 g = pos * 3
                 b = 255 - pos * 3
             return (r, g, b)
-        
+
     def rainbowbreathing(self, wait_ms=10):
         """Draw rainbowbreathing that fades across all pixels at once."""
         if self.is_support_led_function == False:
@@ -94,7 +94,7 @@ class Led:
                     self.strip.set_led_rgb_data(i, color2)
                 self.strip.show()
 
-                self.rainbowbreathing_brightness += 1  
+                self.rainbowbreathing_brightness += 1
                 if self.rainbowbreathing_brightness >= 200:
                     self.rainbowbreathing_brightness = 0
                     self.color_wheel_value += 32
@@ -136,8 +136,8 @@ class Led:
                 self.color_wheel_value += 5
                 if self.color_wheel_value >= 256:
                     self.color_wheel_value = 0
-               
-                    
+
+
     def ledIndex(self, index, R, G, B):
         """Set the color of specific LEDs based on the index."""
         if self.is_support_led_function == False:
@@ -149,22 +149,22 @@ class Led:
                     self.strip.set_led_rgb_data(i, color)
                     self.strip.show()
                 index = index >> 1
-               
+
 # Main program logic follows:
 if __name__ == '__main__':
     print ('Program is starting ... ')
-    led = Led()       
+    led = Led()
     try:
         print ("colorBlink animation")
         start = time.time()
         while (time.time() - start) < 5:
             led.colorBlink(1)
-        
+
         print ("following animation")
         start = time.time()
         while (time.time() - start) < 5:
             led.following(50)
-        
+
         print ("rainbowbreathing animation")
         start = time.time()
         while (time.time() - start) < 5:
@@ -180,11 +180,12 @@ if __name__ == '__main__':
         led.colorBlink(0)
     finally:
         print ("\nEnd of program")
-            
-        
-                    
 
 
 
 
-   
+
+
+
+
+'''

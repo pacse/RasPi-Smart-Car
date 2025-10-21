@@ -1,4 +1,4 @@
-import sys
+'''import sys
 import argparse
 import struct
 import time
@@ -106,7 +106,7 @@ class mywindow(QMainWindow, Ui_server_ui):
             if self.tcp_server.get_command_server_busy() == False:
                 adc_light_1 = self.car.adc.read_adc(0)
                 adc_light_2 = self.car.adc.read_adc(1)
-                cmd = self.command.CMD_MODE + "#2#{:.2f}#{:.2f}".format(adc_light_1, adc_light_2) + "\n" 
+                cmd = self.command.CMD_MODE + "#2#{:.2f}#{:.2f}".format(adc_light_1, adc_light_2) + "\n"
                 self.tcp_server.send_data_to_command_client(cmd)
                 #print(cmd)
     def send_line_data(self):
@@ -254,7 +254,7 @@ class mywindow(QMainWindow, Ui_server_ui):
                         elif self.cmd_parse.int_parameter[0] == 3:
                             self.car_mode = 4
                             print("Car Mode: Ultrasonic Car")
-                    
+
             if self.queue_cmd.empty():
                 time.sleep(0.001)
 
@@ -387,7 +387,7 @@ class mywindow(QMainWindow, Ui_server_ui):
                     self.led.rainbowCycle()
                 elif self.led_mode == 0:
                     self.led.colorBlink(0)
-                        
+
 
         except KeyboardInterrupt:
             print("LED process interrupted, cleaning up...")
@@ -430,23 +430,23 @@ if __name__ == '__main__':
     parser = argparse.ArgumentParser(description='Freenove 4WD Smart Car Server')
     parser.add_argument('-t', '--terminal', action='store_true', help='Run in terminal mode (no GUI)')
     parser.add_argument('-n', '--no-gui', action='store_true', help='Run in terminal mode (no GUI)')
-    
+
     args = parser.parse_args()
-    
+
     # Check if either flag is set
     headless_mode = args.terminal or args.no_gui
     if headless_mode:
         # Run in headless mode - only start server functionality
         app = QApplication(sys.argv)
         server_window = mywindow()
-        
+
         # Start the server automatically
         if server_window.label.text() == "Server Off":
             server_window.on_pushButton_handle()
-        
+
         # Handle Ctrl+C gracefully
         signal.signal(signal.SIGINT, server_window.signal_handler)
-        
+
         # Keep the application running
         try:
             sys.exit(app.exec_())
@@ -457,4 +457,4 @@ if __name__ == '__main__':
         # Run with GUI (existing behavior)
         myshow = mywindow()
         myshow.show()
-        sys.exit(myshow.app.exec_())
+        sys.exit(myshow.app.exec_())'''

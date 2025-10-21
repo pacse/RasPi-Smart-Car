@@ -1,4 +1,4 @@
-from ultrasonic import Ultrasonic
+'''from ultrasonic import Ultrasonic
 from motor import Ordinary_Car
 from servo import Servo
 from infrared import Infrared
@@ -19,7 +19,7 @@ class Car:
         self.car_sonic_distance = [30, 30, 30]
         self.time_compensate = 3 #Depend on your own car,If you want to get the best out of the rotation mode, change the value by experimenting.
         self.start()
-    def start(self):  
+    def start(self):
         if self.servo is None:
             self.servo = Servo()
         if self.sonic is None:
@@ -29,7 +29,7 @@ class Car:
         if self.infrared is None:
             self.infrared = Infrared()
         if self.adc is None:
-            self.adc = ADC() 
+            self.adc = ADC()
 
     def close(self):
         self.motor.set_motor_model(0,0,0,0)
@@ -45,8 +45,8 @@ class Car:
 
     def run_motor_ultrasonic(self, distance):
         if (distance[0] < 30 and distance[1] < 30 and distance[2] <30) or distance[1] < 30 :
-            self.motor.set_motor_model(-1450,-1450,-1450,-1450) 
-            time.sleep(0.1)   
+            self.motor.set_motor_model(-1450,-1450,-1450,-1450)
+            time.sleep(0.1)
             if distance[0] < distance[2]:
                 self.motor.set_motor_model(1450,1450,-1450,-1450)
             else :
@@ -188,4 +188,4 @@ if __name__ == '__main__':
     elif sys.argv[1] == 'Light' or sys.argv[1] == 'light':
         test_car_light()
     elif sys.argv[1] == 'Rotate' or sys.argv[1] == 'rotate':
-        test_car_rotate()
+        test_car_rotate()'''
