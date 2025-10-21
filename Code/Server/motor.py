@@ -1,4 +1,4 @@
-"""
+'''"""
 Motor control module using PCA9685 PWM driver.
 """
 
@@ -97,3 +97,4 @@ if __name__=='__main__':
     finally:
         PWM.close()
 
+'''

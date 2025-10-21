@@ -4,7 +4,7 @@ Core motor components
 NOTE: Motors are controlled separately
 from the rest of the board components.
 """
-from .. import GPIO
+from ... import GPIO
 
 
 class Motor:

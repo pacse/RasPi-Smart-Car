@@ -1,4 +1,4 @@
-import socket  # Import the socket module for network communication
+'''import socket  # Import the socket module for network communication
 import fcntl   # Import the fcntl module for I/O control
 import struct  # Import the struct module for packing and unpacking data
 from tcp_server import TCPServer  # Import the TCPServer class from the tcp_server module
@@ -127,4 +127,4 @@ if __name__ == '__main__':
 
     except KeyboardInterrupt:  # Catch keyboard interrupt
         print("Received interrupt signal, stopping server...")  # Print interrupt information
-        server.stop_tcp_servers()  # Stop the TCP servers
+        server.stop_tcp_servers()  # Stop the TCP servers'''

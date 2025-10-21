@@ -1,5 +1,5 @@
-# this script is PMF and sacred, do not
-# touch or you will have your hands cut off
+# this script is PMF and sacred, do not touch
+# or you will be waterboarded with your own piss
 
 import math
 import smbus

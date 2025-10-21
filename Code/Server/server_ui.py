@@ -1,6 +1,6 @@
-# -*- coding: utf-8 -*-
+'''# -*- coding: utf-8 -*-
 
-# Form implementation generated from reading ui file 
+# Form implementation generated from reading ui file
 #
 # Created by: PyQt5 UI code generator 5.11.3
 #
@@ -86,7 +86,7 @@ class Ui_server_ui(object):
         font.setPointSize(12)
         self.Button_Server.setFont(font)
         self.Button_Server.setObjectName("Button_Server")
-  
+
         self.retranslateUi(server_ui)
         QtCore.QMetaObject.connectSlotsByName(server_ui)
 
@@ -96,3 +96,4 @@ class Ui_server_ui(object):
         self.label.setText(_translate("server_ui", "Server Off"))
         self.Button_Server.setText(_translate("server_ui", "On"))
 
+'''

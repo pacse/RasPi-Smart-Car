@@ -1,4 +1,4 @@
-import queue
+'''import queue
 
 class Message_Parse:
     def __init__(self):
@@ -77,4 +77,4 @@ if __name__ == '__main__':
             else:
                 print("msg.input_string: {}".format(msg_parse.input_string))          # Print the raw input string
 
-    print("Test end")  # Indicate the end of the test
+    print("Test end")  # Indicate the end of the test'''
