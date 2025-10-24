@@ -1,11 +1,11 @@
 """
-All Server-side modules for car
+Classes for hardware components:
+- ADC
+- Buzzer
+- IR Sensors
 """
 
-from RPi import GPIO # GPIO library for Raspberry Pi,
-                      # used everywhere in the server modules
-
-
-# GPIO settings
-GPIO.setmode(GPIO.BOARD)
-
+from .buzzer import Buzzer
+from .infrared import Infrared
+from .photoresistor import Photoresistor
+from .servo import SensorArrayServos
