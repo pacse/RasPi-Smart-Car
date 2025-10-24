@@ -12,19 +12,11 @@ motor_pins = [
               (37, 38)   # Back-right motor pins
              ]
 
-FL = Motor(motor_pins[0])
-FR = Motor(motor_pins[1])
-BL = Motor(motor_pins[2])
-BR = Motor(motor_pins[3])
+car = Car(motor_pins)
 
-FL.set_speed(50)
-FR.set_speed(50)
-BL.set_speed(50)
-BR.set_speed(50)
+car.set_motor_speeds(FL=50, FR=50, BL=50, BR=50)
 
 sleep(2)
 
-FL.cleanup()
-FR.cleanup()
-BL.cleanup()
-BR.cleanup()
+car.stop_all_motors()
+car.cleanup()
