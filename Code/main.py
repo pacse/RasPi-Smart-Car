@@ -3,6 +3,7 @@ Test script for movement
 """
 
 from Server.components.motors import Car, Motor
+from time import sleep
 
 motor_pins = [
               (11, 12),  # Front-left motor pins
@@ -20,6 +21,8 @@ FL.set_speed(50)
 FR.set_speed(50)
 BL.set_speed(50)
 BR.set_speed(50)
+
+sleep(2)
 
 FL.cleanup()
 FR.cleanup()
