@@ -23,7 +23,7 @@ class Controller:
         right_v = speed - turn
 
         self.car.set_motor_speeds(FL = left_v, FR = right_v,
-                              BL = left_v, BR = right_v)
+                                  BL = left_v, BR = right_v)
 
 
     def strafe_left(self, speed: int) -> None:

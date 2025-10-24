@@ -1,22 +1,27 @@
-from Server.components import Buzzer, Infrared, Photoresistor, Servo
-from time import sleep
+"""
+Test script for movement
+"""
 
-import smbus
-print('Imported smbus')
+from Server.components.motors import Car, Motor
 
-print('Buzzer init . . .')
-buzzer = Buzzer()
+motor_pins = [
+              (11, 12),  # Front-left motor pins
+              (15, 16),  # Front-right motor pins
+              (35, 36),  # Back-left motor pins
+              (37, 38)   # Back-right motor pins
+             ]
 
-buzzer.on()
-sleep(2)
-buzzer.off()
-sleep(2)
+FL = Motor(motor_pins[0])
+FR = Motor(motor_pins[1])
+BL = Motor(motor_pins[2])
+BR = Motor(motor_pins[3])
 
-print('Servo init . . .')
-pwm_servo = Servo()
+FL.set_speed(50)
+FR.set_speed(50)
+BL.set_speed(50)
+BR.set_speed(50)
 
-pwm_servo.set_servo_pwm(0,90)
-pwm_servo.set_servo_pwm(1,90)
-
-pwm_servo.cleanup()
-buzzer.cleanup()
+FL.cleanup()
+FR.cleanup()
+BL.cleanup()
+BR.cleanup()
