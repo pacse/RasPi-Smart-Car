@@ -45,3 +45,10 @@ class Controller:
 
         self.car.set_motor_speeds(FL = speed, FR = -speed,
                               BL = -speed, BR = speed)
+
+
+    def cleanup(self) -> None:
+        """
+        Cleanup the car's motors.
+        """
+        self.car.cleanup()
