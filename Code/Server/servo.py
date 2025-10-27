@@ -1,5 +1,5 @@
-from gpiozero import Servo
-from gpiozero.pins.pigpio import PiGPIOFactory
+from gpiozero import Servo                     # type: ignore (not coding on Raspberry Pi)
+from gpiozero.pins.pigpio import PiGPIOFactory # type: ignore (not coding on Raspberry Pi)
 
 class SensorArrayServos:
     """
