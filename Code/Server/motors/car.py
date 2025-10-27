@@ -30,7 +30,7 @@ class Car:
                ):
 
             raise ValueError((
-                '[Car CLASS - __init__]: motor_pins'
+                '[Server.motors.Car.__init__]: motor_pins'
                 ' must contain exactly 4 tuples.'
             ))
 
@@ -51,7 +51,10 @@ class Car:
 
     # === Base functions ===
 
-    def set_motor_speeds(self, FL: int, FR: int, BL: int, BR: int) -> None:
+    def set_motor_speeds(self,
+                         FL: int, FR: int,
+                         BL: int, BR: int
+                        ) -> None:
         """
         Set speeds for all 4 motors.
 
@@ -60,7 +63,6 @@ class Car:
         :param BL: Back-left motor speed (-100 to 100).
         :param BR: Back-right motor speed (-100 to 100).
 
-        :raises ValueError: If speeds does not contain exactly 4 speed values.
         :raises RuntimeError: If setting any motor speed fails.
         """
 
@@ -72,6 +74,15 @@ class Car:
 
         except Exception as e: # catch errors from motor class
             raise RuntimeError(f'Failed to set motor speeds:\n') from e
+
+    def set_all_speeds(self, speed: int) -> None:
+        """
+        Set the same speed for all motors.
+
+        :param speed: Motor speed (-100 to 100).
+        """
+
+        self.set_motor_speeds(speed, speed, speed, speed)
 
     def stop_all_motors(self) -> None:
         """
