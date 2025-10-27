@@ -12,12 +12,12 @@ class Motor:
     Basic motor controller class.
     """
 
-    def __init__(self, pins: tuple[int, int], pwm_freq: int = 50) -> None:
+    def __init__(self, pins: tuple[int, int], pwm_freq: int = 100) -> None:
         """
         Initialize the Motor controller.
 
         :param pins: Two BOARD pin numbers for forward and backward control.
-        :param pwm_freq: The frequency for PWM control.
+        :param pwm_freq: The frequency for PWM control. Default is 100Hz.
         """
 
         # === validation ===
@@ -47,21 +47,24 @@ class Motor:
 
 
     # === Validation ===
-    def _validate_speed(self, speed: int) -> None:
+    def _validate_speed(self, speed: int, min: int = -100, max: int = 100) -> None:
         """
-        Ensure speed is within valid range (0-100).
+        Ensure speed is within valid range (min-max).
 
-        :param speed: Speed percentage (0 - 100).
+        :param speed: Speed to validate.
+
+        :param min: Minimum valid speed. Default: -100.
+        :param max: Maximum valid speed. Default: 100.
 
         :raises TypeError: If speed is not an integer.
-        :raises ValueError: If speed is not between 0 and 100.
+        :raises ValueError: If speed is not between min and max.
         """
 
         if not isinstance(speed, int):
             raise TypeError("Speed must be an integer")
 
-        if not (0 <= speed <= 100):
-            raise ValueError("Speed must be between 0 and 100")
+        if not (min <= speed <= max):
+            raise ValueError(f"Speed must be between {min} and {max}")
 
 
     # === Control functions ===
@@ -89,6 +92,7 @@ class Motor:
 
         :param speed: Speed percentage (0 - 100).
         """
+        self._validate_speed(speed, min=0, max=100)
 
         self.set_speed(speed)
 
@@ -98,6 +102,7 @@ class Motor:
 
         :param speed: Speed percentage (0 - 100).
         """
+        self._validate_speed(speed, min=0, max=100)
 
         self.set_speed(-speed)
 
