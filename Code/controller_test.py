@@ -2,6 +2,7 @@ from Server.controller import Car_Controller
 from Server.motors import Car, Controller
 from Server.motors.config import MOTOR_PINS
 
+import time
 
 import pygame
 
@@ -22,4 +23,5 @@ while True:
             pygame.quit()
 
     #controller.from_joystick(car_controller.accel_x, car_controller.accel_y)
-    print(pygame.joystick.Joystick(0).get_axis(1))
+    print(pygame.joystick.Joystick(0).get_axis(1), "|", pygame.joystick.Joystick(0).get_axis(0))
+    time.sleep(0.5)
