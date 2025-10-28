@@ -1,4 +1,5 @@
 from .car import Car
+from time import sleep
 
 class Controller:
     """
@@ -24,6 +25,7 @@ class Controller:
 
         self.car.set_motor_speeds(FL = left_v, FR = right_v,
                                   BL = left_v, BR = right_v)
+        sleep(0.25)  # small delay to prevent overload
 
 
     def strafe_left(self, speed: int) -> None:
