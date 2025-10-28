@@ -4,14 +4,9 @@ Get input from a connected controller and display it in the terminal.
 
 import pygame
 
-pygame.init()
-pygame.joystick.init()
 
-joysticks = [pygame.joystick.Joystick(x) for x in range(pygame.joystick.get_count())]
 
-print(joysticks)
-
-class car:
+class Car_Controller:
 
     def __init__(self):
         self.accel_y = pygame.joystick.Joystick(0).get_axis(1)
