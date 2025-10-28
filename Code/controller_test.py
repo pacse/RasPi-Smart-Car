@@ -22,4 +22,4 @@ while True:
             pygame.quit()
 
     #controller.from_joystick(car_controller.accel_x, car_controller.accel_y)
-    car_controller.display()
+    print(car_controller.accel_x, car_controller.accel_y)
