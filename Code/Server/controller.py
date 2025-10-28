@@ -120,13 +120,6 @@ class car:
         #print(' ' * t_size, end='\r')
         print(x_y_info, end='\r', flush=True)
 
-while True:
-    for event in pygame.event.get():
-        if event.type == pygame.QUIT:
-            pygame.quit()
-    CAR = car()
-    CAR.display()
-
 
 
     # Left Trigger
