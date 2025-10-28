@@ -1,5 +1,5 @@
-from .car import Car
-from .config import MOTOR_PINS
+from Server.motors import Car
+from Server.motors.config import MOTOR_PINS
 from time import sleep
 
 car = Car(MOTOR_PINS)
