@@ -1,11 +1,6 @@
 """
 Classes for hardware components:
-- ADC
-- Buzzer
-- IR Sensors
+- Servos for Sensor Array
 """
 
-from .buzzer import Buzzer
-from .infrared import Infrared
-from .photoresistor import Photoresistor
 from .servo import SensorArrayServos
