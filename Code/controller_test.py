@@ -22,6 +22,5 @@ while True:
         if event.type == pygame.QUIT:
             pygame.quit()
 
-    #controller.from_joystick(car_controller.accel_x, car_controller.accel_y)
-    print(pygame.joystick.Joystick(0).get_axis(1), "|", pygame.joystick.Joystick(0).get_axis(0))
+    controller.from_joystick(car_controller.accel_x, car_controller.accel_y)
     time.sleep(0.5)
