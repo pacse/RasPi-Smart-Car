@@ -1,5 +1,6 @@
 from gpiozero import Servo                     # type: ignore (not coding on Raspberry Pi)
 from gpiozero.pins.pigpio import PiGPIOFactory # type: ignore (not coding on Raspberry Pi)
+from ..config import DEFAULT
 
 class SensorArrayServos:
     """
@@ -16,11 +17,8 @@ class SensorArrayServos:
 
     VALID_MOTORS    = [0, 1]    # servo channels
 
-    # GPIO pins for servos TODO: SET PINS
-    SERVO_PINS = [
-                  17,  # Servo 0 - Camera Pan
-                  27,  # Servo 1 - Camera Tilt
-                 ]
+    # GPIO pins for servos
+    SERVO_PINS = DEFAULT.SERVO_PINS
 
 
     def __init__(self):
@@ -82,6 +80,21 @@ class SensorArrayServos:
         # set servo position
         self.servos[channel].value = angle
 
+    def set_all_angles(self, angle: float) -> None:
+        """
+        Set all servos to the same angle.
+
+        :param angle: Desired angle (0-180 degrees)
+
+        :raises ValueError: If angle is invalid
+        """
+        # validation
+        self._validate_angle(angle)
+
+        for channel in self.VALID_MOTORS:
+            self.set_angle(channel, angle)
+
+
     def set_joystick(self, x: float, y: float) -> None:
         """
         Sets servo positions based on joystick x and y values.
@@ -112,20 +125,3 @@ class SensorArrayServos:
             servo.close()
 
 
-def test():
-    """
-    Test SensorArrayServos class:
-    Rotate servos to 90 degrees.
-    """
-
-    print('Rotating to 90 degrees...')
-
-    servos = SensorArrayServos()
-
-    try:
-        while True:
-            servos.set_angle(0, 90)
-            servos.set_angle(1, 90)
-
-    except KeyboardInterrupt:
-        print('\nEnd of program.')
