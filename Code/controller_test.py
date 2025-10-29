@@ -49,7 +49,8 @@ try:
                 pygame.quit()
 
         car_controller.update()
-        print(car_controller.trigger_l, "|", car_controller.trigger_r)
+        print(car_controller.trigger_l, "|", car_controller.trigger_r, end='\r', flush=True)
+
         #car_controller.display()
         #if car_controller.trigger_l != 0
         #controller.from_joystick(-car_controller.pwm_y, -car_controller.pwm_x)
