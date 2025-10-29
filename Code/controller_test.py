@@ -4,25 +4,41 @@ from Server.motors.config import MOTOR_PINS
 
 import time
 
-import pygame
+#import pygame
 
-pygame.init()
-pygame.joystick.init()
+#pygame.init()
+#pygame.joystick.init()
 
 car = Car(MOTOR_PINS)
 controller = Controller(car)
 
-car_controller = Car_Controller()
-joysticks = [pygame.joystick.Joystick(x) for x in range(pygame.joystick.get_count())]
+controller.from_joystick(1, 0)
+time.sleep(2)
+controller.from_joystick(0, 1)
+time.sleep(2)
+controller.strafe_left(50)
+time.sleep(2)
+controller.strafe_right(50)
+time.sleep(2)
+controller.cleanup()
 
-print(joysticks)
+#car_controller = Car_Controller()
+#joysticks = [pygame.joystick.Joystick(x) for x in range(pygame.joystick.get_count())]
 
-while True:
-    for event in pygame.event.get():
-        if event.type == pygame.QUIT:
-            pygame.quit()
+#print(joysticks)
 
-    #controller.from_joystick(car_controller.accel_x, car_controller.accel_y)
-    car_controller.update()
-    car_controller.display()
-    time.sleep(0.5)
+'''
+try:
+    while True:
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                pygame.quit()
+
+        car_controller.update()
+        car_controller.display()
+        #controller.from_joystick((car_controller.pwm_y/100.0), (car_controller.pwm_x/100.0))
+        time.sleep(0.25)
+finally:
+    controller.cleanup()
+    pygame.quit()
+'''
