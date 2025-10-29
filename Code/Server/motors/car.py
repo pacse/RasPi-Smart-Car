@@ -73,7 +73,7 @@ class Car:
             self.BR_motor.set_speed(BR)
 
         except Exception as e: # catch errors from motor class
-            raise RuntimeError(f'Failed to set motor speeds:\n') from e
+            raise e
 
     def set_all_speeds(self, speed: int) -> None:
         """

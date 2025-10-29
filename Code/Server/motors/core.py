@@ -4,7 +4,7 @@ Core motor components
 NOTE: Motors are controlled separately
 from the rest of the board components.
 """
-from ... import GPIO
+from .. import GPIO
 
 
 class Motor:
@@ -84,6 +84,9 @@ class Motor:
         elif speed < 0:
             self.pwm_forward.ChangeDutyCycle(0)
             self.pwm_backward.ChangeDutyCycle(abs(speed))
+
+        else:
+            self.stop()
 
 
     def forward(self, speed: int) -> None:
