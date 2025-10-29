@@ -112,7 +112,7 @@ class Car_Controller:
         #final = f'{x_y_info:^{t_size}}{r_trig}'
         #x_y_info = f'X_JOY_STRENGTH[{round(self.accel_x, 2):>7}], Y_JOY_SPEED[{round(self.accel_y, 2):>7}]{x_move}{y_move}'
         #print(' ' * t_size, end='\r')
-        print(x_y_info, end='\r', flush=True)
+        print(f'X: {self.accel_x} {self.pwm_x} | Y: {self.accel_y} {self.pwm_y}', end='\r', flush=True)
 
 
 
