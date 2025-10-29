@@ -23,8 +23,8 @@ class Controller:
         speed = round(y_axis)  # forward/backward speed
         turn = round(x_axis)   # turning adjustment
 
-        left_v = speed + turn
-        right_v = speed - turn
+        left_v = speed - turn
+        right_v = speed + turn
 
         # Clamp values to -100 to 100
         if left_v > self.MAX:
