@@ -99,20 +99,13 @@ class Car_Controller:
         r_trig =  "[" + "".join(bar_4) + "]"    # returnes characters [] boundries and joins the Bar list
         LB_pressed = pygame.joystick.Joystick(0).get_button(4)
         RB_pressed = pygame.joystick.Joystick(0).get_button(5)
-        if self.accel_x < 0:
-            self.pwm = self.accel_x*-1*100
-        else:
-            self.pwm = self.accel_x*100
-        if self.accel_y < 0:
-            self.pwm_y = self.accel_y*-1*100
-        else:
-            self.pwm_y = self.accel_y*100
-        if self.trigger_l < 0:
-            self.pwm_trig_l = self.trigger_l*-1*100
-        else:
-            self.pwm_y = self.accel_y*100
 
-        x_y_info = f'L-R{x_move}PWR{y_move}L-TRIG{l_trig}R-TRIG{r_trig}LB_PRESSED={LB_pressed}__RB_PRESSED={RB_pressed}PWM_X[{round(self.pwm, 1):>5}]PWM_Y[{round(self.pwm_y, 1):>5}]'# info on what input is being displayed
+        self.pwm_x = self.accel_x*100
+
+        self.pwm_y = self.accel_y*100
+
+
+        x_y_info = f'L-R{x_move}PWR{y_move}L-TRIG{l_trig}R-TRIG{r_trig}LB_PRESSED={LB_pressed}__RB_PRESSED={RB_pressed}PWM_X[{round(self.pwm_x, 1):>5}]PWM_Y[{round(self.pwm_y, 1):>5}]'# info on what input is being displayed
 
         #t_size = os.get_terminal_size().columns
 
