@@ -68,6 +68,20 @@ class Controller:
         self.car.set_motor_speeds(FL = speed, FR = -speed,
                               BL = -speed, BR = speed)
 
+    def strafe_from_joystick(self, l_trigger, r_trigger) -> None:
+        """
+        Strafe the car left or right based on joystick input.
+
+        :param l_trigger: Value of the left trigger (0 - 1).
+        :param r_trigger: Value of the right trigger (0 - 1).
+        """
+
+        if l_trigger > r_trigger:
+            l_trigger = round(l_trigger * 100)
+            self.strafe_left(l_trigger)
+        else:
+            r_trigger = round(r_trigger * 100)
+            self.strafe_right(r_trigger)
 
     def cleanup(self) -> None:
         """

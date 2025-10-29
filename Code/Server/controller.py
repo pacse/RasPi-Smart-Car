@@ -18,11 +18,26 @@ class Car_Controller:
     def update(self):
         self.accel_y = pygame.joystick.Joystick(0).get_axis(1)
         self.accel_x = pygame.joystick.Joystick(0).get_axis(0)
+
         self.trigger_l = pygame.joystick.Joystick(0).get_axis(4)
         self.trigger_r = pygame.joystick.Joystick(0).get_axis(5)
 
+        self.trigger_l = (self.trigger_l +1)/2   # remap from -1 to 1  >>  0 to 1
+        self.trigger_r = (self.trigger_r +1)/2   # remap from -1 to 1  >>  0 to 1
+
+        if self.trigger_l > 1: self.trigger_l = 1
+        if self.trigger_r > 1: self.trigger_r = 1
+
+        if self.trigger_l < 0: self.trigger_l = 0
+        if self.trigger_r < 0: self.trigger_r = 0
+
+        if self.trigger_l > 0 or self.trigger_r > 0:
+            self.strafe = True
+        else:
+            self.strafe = False
+
         # handle deadzone
-        if 0< self.accel_x <= 0.2   or 0> self.accel_x >-0.2: self.acel_x = 0
+        if 0< self.accel_x <= 0.2   or 0> self.accel_x >-0.2: self.accel_x = 0
         if 0< self.trigger_l <= 0.2   or 0> self.trigger_l >-0.2: self.trigger_l = 0
         if 0< self.trigger_r <= 0.2   or 0> self.trigger_r >-0.2: self.trigger_r = 0
 
