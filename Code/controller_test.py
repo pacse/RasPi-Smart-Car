@@ -54,7 +54,7 @@ try:
         if not car_controller.strafe:
             controller.from_joystick(-car_controller.pwm_y, -car_controller.pwm_x)
         else:
-            controller.str
+            controller.strafe_from_joystick(car_controller.trigger_l, car_controller.trigger_r)
         #time.sleep(0.25)
 finally:
     controller.cleanup()
