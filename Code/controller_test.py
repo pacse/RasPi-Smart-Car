@@ -49,7 +49,7 @@ try:
                 pygame.quit()
 
         car_controller.update()
-        print(car_controller.trigger_l, "|", car_controller.trigger_r, end='\r', flush=True)
+        print(f'{car_controller.trigger_l:^17} | {car_controller.trigger_r:^17}', end='\r', flush=True)
 
         #car_controller.display()
         #if car_controller.trigger_l != 0
