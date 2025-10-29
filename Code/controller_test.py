@@ -12,18 +12,10 @@ pygame.joystick.init()
 car = Car(MOTOR_PINS)
 controller = Controller(car)
 
-car.FL_motor.set_speed(50)
-time.sleep(2)
-car.FL_motor.set_speed(0)
-car.FR_motor.set_speed(50)
-time.sleep(2)
-car.FR_motor.set_speed(0)
-car.BL_motor.set_speed(50)
-time.sleep(2)
-car.BL_motor.set_speed(0)
-car.BR_motor.set_speed(50)
-time.sleep(2)
-car.BR_motor.set_speed(0)
+for motor in car.motors:
+    motor.set_speed(50)
+    time.sleep(2)
+    motor.set_speed(0)
 car.cleanup()
 
 """try:
