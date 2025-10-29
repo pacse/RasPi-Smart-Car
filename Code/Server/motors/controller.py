@@ -9,19 +9,31 @@ class Controller:
         self.car = car
 
 
-    def from_joystick(self, y_axis: int, x_axis: int) -> None:
+    def from_joystick(self, y_axis: float, x_axis: float) -> None:
         """
         Control the car using a single joystick.
 
-        :param y_axis: Y-axis value from joystick (-1 to 1).
-        :param x_axis: X-axis value from joystick (-1 to 1).
+        :param y_axis: Y-axis value from joystick (-100 to 100).
+        :param x_axis: X-axis value from joystick (-100 to 100).
         """
 
-        speed = round(y_axis * 100)  # forward/backward speed
-        turn = round(x_axis * 100)   # turning adjustment
+        speed = round(y_axis)  # forward/backward speed
+        turn = round(x_axis)   # turning adjustment
 
         left_v = speed + turn
         right_v = speed - turn
+
+        # Clamp values to -100 to 100
+        if left_v > 100:
+            left_v = 100
+        elif left_v < -100:
+            left_v = -100
+
+        if right_v > 100:
+            right_v = 100
+        elif right_v < -100:
+            right_v = -100
+
 
         print("--- Joystick Input ---")
         print(f"Y-axis: {y_axis}, X-axis: {x_axis}")

@@ -44,7 +44,7 @@ try:
 
         car_controller.update()
         car_controller.display()
-        controller.from_joystick((car_controller.pwm_y/100.0), (car_controller.pwm_x/100.0))
+        controller.from_joystick(car_controller.pwm_y, car_controller.pwm_x)
         time.sleep(0.25)
 finally:
     controller.cleanup()
