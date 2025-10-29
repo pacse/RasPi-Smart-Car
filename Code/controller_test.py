@@ -51,7 +51,7 @@ try:
         car_controller.update()
         car_controller.display()
         controller.from_joystick(-car_controller.pwm_y, -car_controller.pwm_x)
-        time.sleep(0.25)
+        #time.sleep(0.25)
 finally:
     controller.cleanup()
     pygame.quit()
