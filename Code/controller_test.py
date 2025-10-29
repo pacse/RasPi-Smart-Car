@@ -26,15 +26,15 @@ finally:
     print("Cleanup done.")"""
 
 
-controller.from_joystick(1, 0)
-time.sleep(2)
-controller.from_joystick(0, 1)
-time.sleep(2)
-controller.strafe_left(50)
-time.sleep(2)
-controller.strafe_right(50)
-time.sleep(2)
-controller.cleanup()
+# controller.from_joystick(1, 0)
+# time.sleep(2)
+# controller.from_joystick(0, 1)
+# time.sleep(2)
+# controller.strafe_left(50)
+# time.sleep(2)
+# controller.strafe_right(50)
+# time.sleep(2)
+# controller.cleanup()
 
 car_controller = Car_Controller()
 joysticks = [pygame.joystick.Joystick(x) for x in range(pygame.joystick.get_count())]
