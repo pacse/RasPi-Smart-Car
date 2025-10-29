@@ -12,6 +12,20 @@ pygame.joystick.init()
 car = Car(MOTOR_PINS)
 controller = Controller(car)
 
+car.FL_motor.set_speed(50)
+time.sleep(2)
+car.FL_motor.set_speed(0)
+car.FR_motor.set_speed(50)
+time.sleep(2)
+car.FR_motor.set_speed(0)
+car.BL_motor.set_speed(50)
+time.sleep(2)
+car.BL_motor.set_speed(0)
+car.BR_motor.set_speed(50)
+time.sleep(2)
+car.BR_motor.set_speed(0)
+car.cleanup()
+
 """try:
     while True:
         car.forward(20)
@@ -30,24 +44,24 @@ finally:
 # time.sleep(2)
 # controller.cleanup()
 
-car_controller = Car_Controller()
-joysticks = [pygame.joystick.Joystick(x) for x in range(pygame.joystick.get_count())]
+# car_controller = Car_Controller()
+# joysticks = [pygame.joystick.Joystick(x) for x in range(pygame.joystick.get_count())]
 
-print(joysticks)
+# print(joysticks)
 
 
-try:
-    while True:
-        for event in pygame.event.get():
-            if event.type == pygame.QUIT:
-                pygame.quit()
+# try:
+#     while True:
+#         for event in pygame.event.get():
+#             if event.type == pygame.QUIT:
+#                 pygame.quit()
 
-        car_controller.update()
-        car_controller.display()
-        controller.from_joystick(car_controller.pwm_y, car_controller.pwm_x)
-        time.sleep(0.25)
-finally:
-    controller.cleanup()
-    pygame.quit()
-    print("Cleanup done.")
+#         car_controller.update()
+#         car_controller.display()
+#         controller.from_joystick(car_controller.pwm_y, car_controller.pwm_x)
+#         time.sleep(0.25)
+# finally:
+#     controller.cleanup()
+#     pygame.quit()
+#     print("Cleanup done.")
 
