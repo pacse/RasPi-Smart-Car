@@ -2,6 +2,9 @@ from .car import Car
 from time import sleep
 
 class Controller:
+    MAX = 30
+    MIN = -30
+
     """
     Controller for the car's motors.
     """
@@ -24,15 +27,15 @@ class Controller:
         right_v = speed - turn
 
         # Clamp values to -100 to 100
-        if left_v > 100:
-            left_v = 100
-        elif left_v < -100:
-            left_v = -100
+        if left_v > self.MAX:
+            left_v = self.MAX
+        elif left_v < self.MIN:
+            left_v = self.MIN
 
-        if right_v > 100:
-            right_v = 100
-        elif right_v < -100:
-            right_v = -100
+        if right_v > self.MAX:
+            right_v = self.MAX
+        elif right_v < self.MIN:
+            right_v = self.MIN
 
 
         print("--- Joystick Input ---")
