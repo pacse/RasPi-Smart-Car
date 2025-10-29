@@ -23,5 +23,6 @@ while True:
             pygame.quit()
 
     #controller.from_joystick(car_controller.accel_x, car_controller.accel_y)
+    car_controller.update()
     print(car_controller.accel_x, car_controller.accel_y)
     time.sleep(0.5)

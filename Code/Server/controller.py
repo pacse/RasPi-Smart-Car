@@ -13,16 +13,21 @@ class Car_Controller:
         self.accel_x = -(pygame.joystick.Joystick(0).get_axis(0))
         self.trigger_l = pygame.joystick.Joystick(0).get_axis(4)
         self.trigger_r = pygame.joystick.Joystick(0).get_axis(5)
-        self.pwm = 0 #pwm for motor >>>>>>>>>>>>>>>>>>>>>>>>>>>>>> x
-        self.pwm_y = 0
-        self.pwm_trig_l = 0
 
-    def display(self):     #can be turned into functions .... (but will be a hastle)
-        #deadzone >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+
+    def update(self):
+        self.accel_y = -(pygame.joystick.Joystick(0).get_axis(1))
+        self.accel_x = -(pygame.joystick.Joystick(0).get_axis(0))
+        self.trigger_l = pygame.joystick.Joystick(0).get_axis(4)
+        self.trigger_r = pygame.joystick.Joystick(0).get_axis(5)
+
+        # handle deadzone
         if 0< self.accel_x <= 0.2   or 0> self.accel_x >-0.2: self.acel_x = 0
         if 0< self.trigger_l <= 0.2   or 0> self.trigger_l >-0.2: self.trigger_l = 0
         if 0< self.trigger_r <= 0.2   or 0> self.trigger_r >-0.2: self.trigger_r = 0
 
+
+    def display(self):     #can be turned into functions .... (but will be a hastle)
 
         bar_length = 16      # total width of the bar
         marker_size = 5       # how wide the marker is
@@ -106,6 +111,7 @@ class Car_Controller:
             self.pwm_trig_l = self.trigger_l*-1*100
         else:
             self.pwm_y = self.accel_y*100
+
         x_y_info = f'L-R{x_move}PWR{y_move}L-TRIG{l_trig}R-TRIG{r_trig}LB_PRESSED={LB_pressed}__RB_PRESSED={RB_pressed}PWM_X[{round(self.pwm, 1):>5}]PWM_Y[{round(self.pwm_y, 1):>5}]'# info on what input is being displayed
 
         #t_size = os.get_terminal_size().columns
