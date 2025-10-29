@@ -9,15 +9,15 @@ import pygame
 class Car_Controller:
 
     def __init__(self):
-        self.accel_y = -(pygame.joystick.Joystick(0).get_axis(1))
-        self.accel_x = -(pygame.joystick.Joystick(0).get_axis(0))
+        self.accel_y = pygame.joystick.Joystick(0).get_axis(1)
+        self.accel_x = pygame.joystick.Joystick(0).get_axis(0)
         self.trigger_l = pygame.joystick.Joystick(0).get_axis(4)
         self.trigger_r = pygame.joystick.Joystick(0).get_axis(5)
 
 
     def update(self):
-        self.accel_y = -(pygame.joystick.Joystick(0).get_axis(1))
-        self.accel_x = -(pygame.joystick.Joystick(0).get_axis(0))
+        self.accel_y = pygame.joystick.Joystick(0).get_axis(1)
+        self.accel_x = pygame.joystick.Joystick(0).get_axis(0)
         self.trigger_l = pygame.joystick.Joystick(0).get_axis(4)
         self.trigger_r = pygame.joystick.Joystick(0).get_axis(5)
 
