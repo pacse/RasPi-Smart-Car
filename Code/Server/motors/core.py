@@ -85,6 +85,9 @@ class Motor:
             self.pwm_forward.ChangeDutyCycle(0)
             self.pwm_backward.ChangeDutyCycle(abs(speed))
 
+        else:
+            self.stop()
+
 
     def forward(self, speed: int) -> None:
         """
