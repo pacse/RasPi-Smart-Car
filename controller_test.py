@@ -1,6 +1,6 @@
-from Server.controller import Car_Controller
-from Server.motors import Car, Controller
-from Server.motors.config import MOTOR_PINS
+from Code.Server.motors.input_display import Car_Controller
+from Code.Server.motors import Car, Controller
+from Code.Server.motors.config import MOTOR_PINS
 
 import time
 
