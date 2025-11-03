@@ -1,6 +1,15 @@
+"""
+Controller for Camera & Ultrasonic sensor mount servos.
+
+.. deprecated:: 1.2
+   This module is deprecated. The car no longer uses servos.
+"""
+
+
+'''
 from gpiozero import Servo                     # type: ignore (not coding on Raspberry Pi)
 from gpiozero.pins.pigpio import PiGPIOFactory # type: ignore (not coding on Raspberry Pi)
-from ..config import DEFAULT
+from .config import DEFAULT
 
 class SensorArrayServos:
     """
@@ -123,5 +132,4 @@ class SensorArrayServos:
         """Cleanup the servos."""
         for servo in self.servos:
             servo.close()
-
-
+'''

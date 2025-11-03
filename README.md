@@ -14,5 +14,13 @@ i2cdetect -y 1 # ensure you see 40 & 48
 
 ```
 
+## Connect to bluetooth controller
+NOTE: Assume controller address: F4:6A:D7:E0:3E:BC
+
+```bash
+sudo bluetoothctl
+
+connect F4:6A:D7:E0:3E:BC
+
 # Original repo
 https://github.com/Freenove/Freenove_4WD_Smart_Car_Kit_for_Raspberry_Pi

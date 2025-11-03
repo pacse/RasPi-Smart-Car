@@ -1,5 +1,5 @@
-from Code.Server.motors import Motor, config
-from Code.Server.motors.car import Car
+from Code.Code.motors import Motor, config
+from Code.Code.motors.car import Car
 import time
 
 car = Car(config.MOTOR_PINS)
