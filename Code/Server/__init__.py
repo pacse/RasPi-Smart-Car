@@ -1,8 +1,11 @@
 """
-Classes for hardware components:
-- Servos for Sensor Array
-"""
-from RPi import GPIO
-GPIO.setmode(GPIO.BOARD)
+Package for RasPi Smart Car project.
 
-from .servo import SensorArrayServos
+Handles:
+- Client-side functionality
+- Server-side functionality
+- Testing
+"""
+
+from RPi import GPIO # type: ignore (not coding on Raspberry Pi)
+from .config import logging, MOTOR_PINS
