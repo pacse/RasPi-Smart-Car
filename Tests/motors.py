@@ -1,8 +1,8 @@
 """
 Test motor module
 """
-from ..Server.motors import Car, Motor, Controller
-from .. import logging, DEFAULT
+from ..Code.motors import Car, Motor, Controller
+from ..Code.config import logging, MOTOR_PINS
 from time import sleep
 
 DURATION = 1     # how long to run motors
@@ -72,7 +72,7 @@ def test_Motor():
 
 
     logger.debug('Creating Motor instance . . .')
-    motor = Motor(DEFAULT.MOTOR_PINS[0])
+    motor = Motor(MOTOR_PINS[0])
 
 
     motor_action(motor, 'forward', motor.forward, 50)
@@ -110,7 +110,7 @@ def test_Car():
     logger.info('Testing Car class . . .')
 
     logger.debug('Creating Car instance . . .')
-    car = Car(DEFAULT.MOTOR_PINS)
+    car = Car(MOTOR_PINS)
 
 
     car_action(car, 'set_all_speeds', car.set_all_speeds, 60)
@@ -159,7 +159,7 @@ def test_Controller():
     logger.info('Testing Controller class . . .')
 
     logger.debug('Creating Car Instance . . .')
-    car = Car(DEFAULT.MOTOR_PINS)
+    car = Car(MOTOR_PINS)
 
     logger.debug('Creating Controller instance . . .')
     controller = Controller(car)
@@ -206,7 +206,7 @@ def test_Controller():
     car.cleanup()
 
 
-if __name__ == '__main__':
+def full_test():
     test_Motor()
     test_Car()
     test_Controller()

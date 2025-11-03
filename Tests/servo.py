@@ -1,4 +1,4 @@
-from ..Server.servo import SensorArrayServos
+from ..Code.servo import SensorArrayServos
 import time
 
 def test_Servo():
