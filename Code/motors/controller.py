@@ -2,12 +2,12 @@ from .car import Car
 #from time import sleep
 
 class Controller:
+    """
+    Adds Controller functionality to the Car class.
+    """
     MAX = 30
     MIN = -30
 
-    """
-    Controller for the car's motors.
-    """
     def __init__(self, car: Car) -> None:
         self.car = car
 
