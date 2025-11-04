@@ -4,42 +4,42 @@ Get input from a connected controller and display it in the terminal.
 
 import pygame
 
-
-
 class Car_Controller:
 
-    def __init__(self):
-        self.accel_y = pygame.joystick.Joystick(0).get_axis(1)
-        self.accel_x = pygame.joystick.Joystick(0).get_axis(0)
-        self.trigger_l = pygame.joystick.Joystick(0).get_axis(4)
-        self.trigger_r = pygame.joystick.Joystick(0).get_axis(5)
+    def __init__(self, Joystick_id=0):
+        self.joystick = pygame.joystick.Joystick(Joystick_id)
+        self.joystick.init()
+        self.update()
 
 
     def update(self):
-        self.accel_y = pygame.joystick.Joystick(0).get_axis(1)
-        self.accel_x = pygame.joystick.Joystick(0).get_axis(0)
+        self.accel_y = self.joystick.get_axis(1)
+        self.accel_x = self.joystick.get_axis(0)
 
-        self.trigger_l = pygame.joystick.Joystick(0).get_axis(4)
-        self.trigger_r = pygame.joystick.Joystick(0).get_axis(5)
+        self.trig_L = self.joystick.get_axis(4)
+        self.Trig_R = self.joystick.get_axis(5)
 
-        self.trigger_l = (self.trigger_l +1)/2   # remap from -1 to 1  >>  0 to 1
-        self.trigger_r = (self.trigger_r +1)/2   # remap from -1 to 1  >>  0 to 1
+        self.trig_L = (self.trig_L +1)/2   # remap from -1 to 1  >>  0 to 1
+        self.Trig_R = (self.Trig_R +1)/2   # remap from -1 to 1  >>  0 to 1
 
-        if self.trigger_l > 1: self.trigger_l = 1
-        if self.trigger_r > 1: self.trigger_r = 1
+        # self.L_Button = self.joystick.get_button(4)
+        # self.R_Button = self.joystick.get_button(5)
 
-        if self.trigger_l < 0: self.trigger_l = 0
-        if self.trigger_r < 0: self.trigger_r = 0
+        if self.trig_L > 1: self.trig_L = 1
+        if self.Trig_R > 1: self.Trig_R = 1
 
-        if self.trigger_l > 0 or self.trigger_r > 0:
+        if self.trig_L < 0: self.trig_L = 0
+        if self.Trig_R < 0: self.Trig_R = 0
+
+        if self.trig_L > 0 or self.Trig_R > 0:
             self.strafe = True
         else:
             self.strafe = False
 
         # handle deadzone
         if 0< self.accel_x <= 0.2   or 0> self.accel_x >-0.2: self.accel_x = 0
-        if 0< self.trigger_l <= 0.2   or 0> self.trigger_l >-0.2: self.trigger_l = 0
-        if 0< self.trigger_r <= 0.2   or 0> self.trigger_r >-0.2: self.trigger_r = 0
+        if 0< self.trig_L <= 0.2   or 0> self.trig_L >-0.2: self.trig_L = 0
+        if 0< self.Trig_R <= 0.2   or 0> self.Trig_R >-0.2: self.Trig_R = 0
 
 
     def display(self):     #can be turned into functions .... (but will be a hastle)
@@ -80,7 +80,7 @@ class Car_Controller:
         y_move =  "[" + "".join(bar_2) + "]"    # returnes characters [] boundries and joins the Bar list
 
         #trigger_r>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
-        pos = int(((self.trigger_l) + 1) /2  * (bar_length -1))
+        pos = int(((self.trig_L) + 1) /2  * (bar_length -1))
         bar_3 = ['-'] * bar_length                          # creates a list for the ---######-----
         start = pos - marker_size //2                     # start of the ### - 1/2 of the marker size so it id centered
         end = start + marker_size                         # end
@@ -97,7 +97,7 @@ class Car_Controller:
         l_trig =  "[" + "".join(bar_3) + "]"    # returnes characters [] boundries and joins the Bar list
 
         #trigger_r>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
-        pos = int(((self.trigger_r) + 1) /2  * (bar_length -1))
+        pos = int(((self.Trig_R) + 1) /2  * (bar_length -1))
         bar_4 = ['-'] * bar_length                          # creates a list for the ---######-----
         start = pos - marker_size //2                     # start of the ### - 1/2 of the marker size so it id centered
         end = start + marker_size                         # end
@@ -112,20 +112,20 @@ class Car_Controller:
             bar_4[i] = '#'
 
         r_trig =  "[" + "".join(bar_4) + "]"    # returnes characters [] boundries and joins the Bar list
-        LB_pressed = pygame.joystick.Joystick(0).get_button(4)
-        RB_pressed = pygame.joystick.Joystick(0).get_button(5)
 
         self.pwm_x = self.accel_x*100
 
         self.pwm_y = self.accel_y*100
 
 
-        x_y_info = f'L-R{x_move}PWR{y_move}L-TRIG{l_trig}R-TRIG{r_trig}LB_PRESSED={LB_pressed}__RB_PRESSED={RB_pressed}PWM_X[{round(self.pwm_x, 1):>5}]PWM_Y[{round(self.pwm_y, 1):>5}]'# info on what input is being displayed
+        # info on what input is being displayed
+        # x_y_info = f'L-R{x_move}PWR{y_move}L-TRIG{l_trig}R-TRIG{r_trig}LB_PRESSED={self.L_Button}__RB_PRESSED={self.R_Button}PWM_X[{round(self.pwm_x, 1):>5}]PWM_Y[{round(self.pwm_y, 1):>5}]'
+        x_y_info = f'L-R{x_move}PWR{y_move}L-TRIG{l_trig}R-TRIG{r_trig}'
 
-        #t_size = os.get_terminal_size().columns
+        # t_size = os.get_terminal_size().columns
 
-        #final = f'{x_y_info:^{t_size}}{r_trig}'
-        #x_y_info = f'X_JOY_STRENGTH[{round(self.accel_x, 2):>7}], Y_JOY_SPEED[{round(self.accel_y, 2):>7}]{x_move}{y_move}'
+        # final = f'{x_y_info:^{t_size}}{r_trig}'
+        # x_y_info = f'X_JOY_STRENGTH[{round(self.accel_x, 2):>7}], Y_JOY_SPEED[{round(self.accel_y, 2):>7}]{x_move}{y_move}'
         #print(' ' * t_size, end='\r')
         print(f'X: {self.accel_x} {self.pwm_x} | Y: {self.accel_y} {self.pwm_y}', end='\r', flush=True)
 
