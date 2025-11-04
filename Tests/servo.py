@@ -1,3 +1,11 @@
+"""
+Tests for the servo module.
+
+.. deprecated:: 1.2
+   This module is deprecated. The car no longer uses servos.
+"""
+
+'''
 from ..Code.servo import SensorArrayServos
 import time
 
@@ -25,3 +33,4 @@ def test_Servo():
     except KeyboardInterrupt:
         servos.cleanup()
         print('\nEnd of program.')
+'''
