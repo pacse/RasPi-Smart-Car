@@ -1,39 +1,42 @@
-from Code.car_controller import Car_Controller
+from Code.joystick_handler import Joystick_Handler
 from Code import Car, Controller
 from Code.config import MOTOR_PINS
 
-# set up pygame for joystick handling
-import pygame
+import pygame as pg
 
-pygame.init()
-pygame.joystick.init()
-
-joysticks = [pygame.joystick.Joystick(x) for x in range(pygame.joystick.get_count())]
 
 car = Car(MOTOR_PINS)
 controller = Controller(car)
 
-car_controller = Car_Controller()
-
-print(joysticks)
+joystick_handler = Joystick_Handler()
 
 
 try:
     while True:
-        for event in pygame.event.get():
-            if event.type == pygame.QUIT:
-                pygame.quit()
+        for event in pg.event.get():
+            if event.type == pg.QUIT:
+                pg.quit()
 
-        car_controller.update()
+            elif event.type == pg.JOYDEVICEREMOVED:
 
-        car_controller.display()
-        if not car_controller.strafe:
-            controller.from_joystick(-car_controller.pwm_y, -car_controller.pwm_x)
+                print("Joystick disconnected.")
+
+                controller.car.stop_all_motors()
+                joystick_handler.reconnect()
+
+                print("Joystick reconnected.")
+
+
+        joystick_handler.update()
+
+        joystick_handler.display()
+        if not joystick_handler.strafe:
+            controller.from_joystick(-joystick_handler.pwm_y, -joystick_handler.pwm_x)
         else:
-            controller.strafe_from_joystick(car_controller.trig_L, car_controller.Trig_R)
-        #time.sleep(0.25)
+            controller.strafe_from_joystick(joystick_handler.trig_L, joystick_handler.trig_R)
+
 finally:
     controller.cleanup()
-    pygame.quit()
+    pg.quit()
     print("Cleanup done.")
 

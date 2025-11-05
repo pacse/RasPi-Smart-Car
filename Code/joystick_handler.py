@@ -69,7 +69,7 @@ class Joystick_Handler:
         Reconnect to joystick if disconnected.
         """
 
-        self.joystick = init_joystick(j_id=self.joystick_id)
+        self.joystick = init_joystick(False, self.joystick_id)
 
     def update(self):
         """
