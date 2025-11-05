@@ -4,6 +4,26 @@ Get input from a connected controller and display it in the terminal.
 
 import pygame
 
+def controller_init(base_init=True):
+    def get_joysticks():
+        count = pygame.joystick.get_count()
+
+        if count > 0:
+            return [pygame.joystick.Joystick(x) for x in range(count)]
+        else:
+            return None
+
+    if base_init:
+        pygame.init()
+        pygame.joystick.init()
+
+    joysticks = get_joysticks()
+
+    while not joysticks:
+        print("No joystick detected. Waiting . . .")
+
+
+
 class Car_Controller:
 
     def __init__(self, Joystick_id=0):

@@ -1,7 +1,6 @@
 from Code.car_controller import Car_Controller
 from Code import Car, Controller
 from Code.config import MOTOR_PINS
-from Code.Tests import servo
 
 # set up pygame for joystick handling
 import pygame
