@@ -20,6 +20,8 @@ def init_joystick(base_init = True, j_id = 0):
         """
         Get needed joystick
         """
+        print([pg.joystick.Joystick(x)
+                         for x in range(pg.joystick.get_count())])
         count = pg.joystick.get_count()
 
         if count > j_id + 1:
