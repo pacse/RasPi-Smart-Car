@@ -20,6 +20,10 @@ try:
             if event.type == pg.QUIT:
                 pg.quit()
 
+            elif event.type == pg.KEYDOWN:
+                if event.key == pg.K_ESCAPE:
+                    raise KeyboardInterrupt
+
             elif event.type == pg.JOYDEVICEREMOVED:
 
                 print("Joystick disconnected.")
@@ -41,5 +45,5 @@ try:
 finally:
     controller.cleanup()
     pg.quit()
-    print("Cleanup done.")
+    print("\nCleanup done.\n")
 
