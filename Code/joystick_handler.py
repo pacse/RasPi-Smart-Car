@@ -126,6 +126,7 @@ class Joystick_Handler:
         self.trig_L = (self.trig_L + 1) / 2
         self.trig_R = (self.trig_R + 1) / 2
 
+        # is the car strafing?
         if self.trig_L > 0 or self.trig_R > 0:
             self.strafe = True
         else:
@@ -134,99 +135,50 @@ class Joystick_Handler:
 
     def display(self):     #can be turned into functions .... (but will be a hastle)
 
-        bar_length = 16   # total width of the bar
-        marker_size = 4   # how wide the marker is
-        pos = 1           # start centered
+        bar_length = 16           # total width of the bar
+        marker_size = 4           # how wide the marker is
+        pos = 1                   # start centered
+        bar = ['-'] * bar_length  # list for the bar characters
+
+        def _render_bar(val):
+            pos = int((val + 1) / 2 * (bar_length - 1))  # the joystick times the width of the #####  finds the center of where the start of the (x+1 to prevent negitives) /2 to find center x>>1 fx == 14 x>>2 fx == 29        (-1 to prevent it going off the bar)
+            start = pos - marker_size // 2               # start of the ### - 1/2 of the marker size so it's centered correctly
+            end = start + marker_size                    # end
+
+            # keep marker inside the bar
+            if start < 0:                               # boundaries (caps the movement to boundary so it cannot cross the border (...))
+                start = 0
+            if end > bar_length:
+                end = bar_length
+
+            for i in range(start, end):              # for loop editing the list to insert the ### by saying start at the start value end at the end value
+                bar[i] = '#'
+
+            return "[" + "".join(bar) + "]"         # returns characters [] boundaries and joins the Bar list
 
         # === x ===
-
-        pos = int((self.accel_x + 1) / 2  * (bar_length -1)) # the joysticj times the width of the #####  finds the center of where the start of the (x+1 to prevent negitives) /2 to find center x>>1 fx == 14 x>>2 fx == 29        (-1 to prevent it going off the bar)
-        bar_1 = ['-'] * bar_length                          # creates a list for the ---######-----
-        start = pos - marker_size // 2                     # start of the ### - 1/2 of the marker size so it id centered correctly
-        end = start + marker_size                         # end
-
-        # keep marker inside the bar
-        if start < 0:                                  # boundries (caps the movement to boundry so it cannot cross the border (...))
-            start = 0
-        if end > bar_length:
-            end = bar_length
-
-        for i in range(start, end):               # for loop editing the list to insert the ### by saying start at the start value end at the end value
-            bar_1[i] = '#'
-        x_move =  "[" + "".join(bar_1) + "]"    # returnes characters [] boundries and joins the Bar list
-
+        x_bar = _render_bar(self.accel_x)
 
         # === y ===
+        y_bar = _render_bar(self.accel_y)
 
-        pos = int(((self.accel_y*-1) + 1) / 2  * (bar_length -1))
-        bar_2 = ['-'] * bar_length                          # creates a list for the ---######-----
-        start = pos - marker_size // 2                     # start of the ### - 1/2 of the marker size so it id centered
-        end = start + marker_size                         # end
-
-        # keep marker inside the bar
-        if start < 0:                                  # boundries
-            start = 0
-        if end > bar_length:
-            end = bar_length
-
-        for i in range(start, end):               # for loop editing the list to insert the ### by saying start at the start value end at the end value
-            bar_2[i] = '#'
-
-        y_move =  "[" + "".join(bar_2) + "]"   # returnes characters [] boundries and joins the Bar list
-
+        # === trigger_l ===
+        l_trig = _render_bar(self.trig_L)
 
         # === trigger_r ===
-
-        pos = int(((self.trig_L) + 1) /2  * (bar_length -1))
-        bar_3 = ['-'] * bar_length                          # creates a list for the ---######-----
-        start = pos - marker_size //2                     # start of the ### - 1/2 of the marker size so it id centered
-        end = start + marker_size                         # end
-
-        # keep marker inside the bar
-        if start < 0:                                    # boundries
-            start = 0
-        if end > bar_length:
-            end = bar_length
-
-        for i in range(start, end):                    # for loop editing the list to insert the ### by saying start at the start value end at the end value
-            bar_3[i] = '#'
-
-        l_trig =  "[" + "".join(bar_3) + "]"    # returnes characters [] boundries and joins the Bar list
-
-
-        # === trigger_r ===
-
-        pos = int(((self.trig_R) + 1) /2  * (bar_length -1))
-        bar_4 = ['-'] * bar_length                          # creates a list for the ---######-----
-        start = pos - marker_size //2                     # start of the ### - 1/2 of the marker size so it id centered
-        end = start + marker_size                         # end
-
-        # keep marker inside the bar
-        if start < 0:                                    # boundries
-            start = 0
-        if end > bar_length:
-            end = bar_length
-
-        for i in range(start, end):                    # for loop editing the list to insert the ### by saying start at the start value end at the end value
-            bar_4[i] = '#'
-
-        r_trig =  "[" + "".join(bar_4) + "]"    # returnes characters [] boundries and joins the Bar list
-
-        self.pwm_x = self.accel_x*100
-
-        self.pwm_y = self.accel_y*100
+        r_trig = _render_bar(self.trig_R)
 
 
         # info on what input is being displayed
         # x_y_info = f'L-R{x_move}PWR{y_move}L-TRIG{l_trig}R-TRIG{r_trig}LB_PRESSED={self.L_Button}__RB_PRESSED={self.R_Button}PWM_X[{round(self.pwm_x, 1):>5}]PWM_Y[{round(self.pwm_y, 1):>5}]'
-        x_y_info = f'L-R{x_move}PWR{y_move}L-TRIG{l_trig}R-TRIG{r_trig}'
+        x_y_info = f'L-R {x_bar} | PWR {y_bar} | L-TRIG {l_trig} | R-TRIG {r_trig}'
 
         # t_size = os.get_terminal_size().columns
 
         # final = f'{x_y_info:^{t_size}}{r_trig}'
         # x_y_info = f'X_JOY_STRENGTH[{round(self.accel_x, 2):>7}], Y_JOY_SPEED[{round(self.accel_y, 2):>7}]{x_move}{y_move}'
         #print(' ' * t_size, end='\r')
-        print(f'X: {self.accel_x} {self.pwm_x} | Y: {self.accel_y} {self.pwm_y}', end='\r', flush=True)
+        print(x_y_info, end='\r', flush=True)
 
 
 
