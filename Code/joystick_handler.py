@@ -21,7 +21,6 @@ def init_joystick(base_init = True, j_id = 0):
         Get needed joystick
         """
         count = pg.joystick.get_count()
-        print(f"Found {count} joystick(s).")
 
         if count > j_id:
             # get connected joysticks
@@ -29,7 +28,6 @@ def init_joystick(base_init = True, j_id = 0):
                          for x in range(count)]
 
             # return the requested joystick
-            print(f"Connecting to joystick ID {j_id}...")
             return joysticks[j_id]
 
         else:
@@ -70,6 +68,10 @@ class Joystick_Handler:
         """
         Reconnect to joystick if disconnected.
         """
+
+        # re-init joystick module
+        pg.joystick.quit()
+        pg.joystick.init()
 
         self.joystick = init_joystick(False, self.joystick_id)
 
