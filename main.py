@@ -5,6 +5,9 @@ from Code.config import MOTOR_PINS
 import pygame as pg
 
 
+# Initialize the car,
+#                controller,
+#                and joystick handler
 car = Car(MOTOR_PINS)
 controller = Controller(car)
 
@@ -31,7 +34,7 @@ try:
 
         joystick_handler.display()
         if not joystick_handler.strafe:
-            controller.from_joystick(-joystick_handler.pwm_y, -joystick_handler.pwm_x)
+            controller.from_joystick(-joystick_handler.accel_y, -joystick_handler.accel_x)
         else:
             controller.strafe_from_joystick(joystick_handler.trig_L, joystick_handler.trig_R)
 
