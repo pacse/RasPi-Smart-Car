@@ -1,10 +1,15 @@
 """
 Controller for Camera & Ultrasonic sensor mount servos.
 
-.. deprecated:: 1.2
+.. deprecated::
    This module is deprecated. The car no longer uses servos.
 """
 
+if __name__ == '__main__':
+    print("This module is deprecated. There are no tests.")
+
+if __name__ != '__main__':
+    print("WARNING: code.tests.servo is deprecated and should not be used.")
 
 '''
 from gpiozero import Servo                     # type: ignore (not coding on Raspberry Pi)
