@@ -8,8 +8,13 @@ class Controller:
     MAX = 30
     MIN = -30
 
-    def __init__(self, car: Car) -> None:
+    def __init__(self,
+                 car: Car,
+                 turn_scale: float = 0.75
+                ) -> None:
+
         self.car = car
+        self.TURN_SCALE = turn_scale
 
 
     def from_joystick(self, y_axis: float, x_axis: float) -> None:
@@ -20,8 +25,11 @@ class Controller:
         :param x_axis: X-axis value from joystick (-100 to 100).
         """
 
-        speed = round(y_axis)  # forward/backward speed
-        turn = round(x_axis)   # turning adjustment
+        # Assumes y_axis and x_axis
+
+        speed = round(y_axis)                   # forward/backward speed
+        turn = round(x_axis * self.TURN_SCALE)  # turning adjustment
+                                                # TURN_SCALE is sensitivity
 
         left_v = speed - turn
         right_v = speed + turn
@@ -36,12 +44,6 @@ class Controller:
             right_v = self.MAX
         elif right_v < self.MIN:
             right_v = self.MIN
-
-
-        print("--- Joystick Input ---")
-        print(f"Y-axis: {y_axis}, X-axis: {x_axis}")
-        print(f'Speed: {speed}, Turn: {turn}')
-        print(f"Left motor speed: {left_v}, Right motor speed: {right_v}")
 
         self.car.set_motor_speeds(FL = left_v, FR = right_v,
                                   BL = left_v, BR = right_v)

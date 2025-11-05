@@ -1,5 +1,7 @@
 """
-Use motor class to create a full car (4 motors).
+Car class for controlling 4 motors.
+
+Extends core Motor class with advanced movement functions.
 """
 
 from .core import Motor
@@ -7,22 +9,34 @@ from .core import Motor
 
 class Car:
     """
-    Individual motor control for a 4-wheeled car.
+    Extends Motor class to control a 4-motor car.
+    :param motor_pins: List of 8 BOARD pin numbers for 4 motors:\n
+                           [(FL_forward, FL_backward),
+                            (FR_forward, FR_backward),
+                            (BL_forward, BL_backward),
+                            (BR_forward, BR_backward)]
+
+        :raises ValueError: If motor_pins does not contain exactly 4 tuples.
     """
 
-    def __init__(self, motor_pins: list[tuple[int, int]]) -> None:
+    def __init__(self,
+                 motor_pins: list[tuple[int, int]]
+                ) -> None:
+
         """
         Initialize the Car class
 
         :param motor_pins: List of 8 BOARD pin numbers for 4 motors:\n
-                           [(M1_forward, M1_backward),
-                            (M2_forward, M2_backward),
-                            (M3_forward, M3_backward),
-                            (M4_forward, M4_backward)]
+                           [(FL_forward, FL_backward),
+                            (FR_forward, FR_backward),
+                            (BL_forward, BL_backward),
+                            (BR_forward, BR_backward)]
 
         :raises ValueError: If motor_pins does not contain exactly 4 tuples.
         """
-        # validation
+
+
+        # === Validation ===
 
         if not (
                 len(motor_pins) == 4 and # 4 motors
@@ -30,10 +44,12 @@ class Car:
                ):
 
             raise ValueError((
-                '[Server.motors.Car.__init__]: motor_pins'
+                'Error initializing car class: motor_pins'
                 ' must contain exactly 4 tuples.'
             ))
 
+
+        # === Motor setup ===
 
         self.FL_motor = Motor(motor_pins[0]) # front-left motor
         self.FR_motor = Motor(motor_pins[1]) # front-right motor
@@ -56,7 +72,7 @@ class Car:
                          BL: int, BR: int
                         ) -> None:
         """
-        Set speeds for all 4 motors.
+        Set individual speeds for all 4 motors.
 
         :param FL: Front-left motor speed (-100 to 100).
         :param FR: Front-right motor speed (-100 to 100).
@@ -73,7 +89,8 @@ class Car:
             self.BR_motor.set_speed(BR)
 
         except Exception as e: # catch errors from motor class
-            raise e
+            raise RuntimeError("Error setting motor speeds:\n") from e
+
 
     def set_all_speeds(self, speed: int) -> None:
         """
@@ -82,7 +99,8 @@ class Car:
         :param speed: Motor speed (-100 to 100).
         """
 
-        self.set_motor_speeds(speed, speed, speed, speed)
+        for motor in self.motors:
+            motor.set_speed(speed)
 
     def stop_all_motors(self) -> None:
         """
@@ -93,17 +111,7 @@ class Car:
             motor.stop()
 
 
-    def cleanup(self) -> None:
-        """
-        Clean up all motors.
-        """
-
-        for motor in self.motors:
-            motor.cleanup()
-
-
-
-    # === Base movement functions ===
+    # === Movement functions ===
 
     def forward(self, speed: int) -> None:
         """
@@ -166,3 +174,12 @@ class Car:
 
         self.set_motor_speeds(FL = speed, FR = 0,
                               BL = speed, BR = 0)
+
+
+    def cleanup(self) -> None:
+        """
+        Clean up all motors.
+        """
+
+        for motor in self.motors:
+            motor.cleanup()

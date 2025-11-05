@@ -1,26 +1,30 @@
 """
-Core motor components
-
-NOTE: Motors are controlled separately
-from the rest of the board components.
+Core motor control class.
 """
 from .. import GPIO
 
 
 class Motor:
     """
-    Basic motor controller class.
+    Core motor control class.
+
+    :param pins: Two BOARD pin numbers for forward and backward control.
+    :param pwm_freq: The frequency for PWM control. Default: 100Hz
     """
 
-    def __init__(self, pins: tuple[int, int], pwm_freq: int = 100) -> None:
+    def __init__(self,
+                 pins: tuple[int, int],
+                 pwm_freq: int = 100
+                ) -> None:
         """
         Initialize the Motor controller.
 
         :param pins: Two BOARD pin numbers for forward and backward control.
-        :param pwm_freq: The frequency for PWM control. Default is 100Hz.
+        :param pwm_freq: The frequency for PWM control. Default: 100Hz
         """
 
-        # === validation ===
+        # === Validation ===
+
         if len(pins) != 2:
             raise ValueError("pins must contain exactly 2 pin numbers.")
 
@@ -30,8 +34,11 @@ class Motor:
         if not all((1 <= pin <= 40) for pin in pins):
             raise ValueError("Pin numbers must be between 1 and 40.")
 
+        if not isinstance(pwm_freq, int) or pwm_freq <= 0:
+            raise ValueError("pwm_freq must be a positive integer.")
 
-        # === setup ===
+
+        # === Setup ===
 
         self.FORWARD, self.BACKWARD = pins
 
@@ -46,15 +53,16 @@ class Motor:
         self.pwm_backward.start(0)
 
 
-    # === Validation ===
+    # === Validation func ===
+
     def _validate_speed(self, speed: int, min: int = -100, max: int = 100) -> None:
         """
         Ensure speed is within valid range (min-max).
 
         :param speed: Speed to validate.
 
-        :param min: Minimum valid speed. Default: -100.
-        :param max: Maximum valid speed. Default: 100.
+        :param min: Minimum valid speed. Default: -100
+        :param max: Maximum valid speed. Default: 100
 
         :raises TypeError: If speed is not an integer.
         :raises ValueError: If speed is not between min and max.
@@ -68,6 +76,7 @@ class Motor:
 
 
     # === Control functions ===
+
     def set_speed(self, speed: int) -> None:
         """
         Change the speed of the motor.
@@ -118,7 +127,7 @@ class Motor:
 
 
     def cleanup(self) -> None:
-        """Clean up the GPIO settings for the motor."""
+        """Clean up the GPIO pins for the motor."""
 
         self.stop()
 
