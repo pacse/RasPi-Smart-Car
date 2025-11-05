@@ -13,6 +13,9 @@ class Controller:
     if testing:
         MAX = 30   # Max pwm duty cycle
         MIN = -30  # Min pwm duty cycle
+    else:
+        MAX = 100  # Max pwm duty cycle
+        MIN = -100 # Min pwm duty cycle
 
 
     def __init__(self,
@@ -42,16 +45,12 @@ class Controller:
         right_v = speed + turn
 
         # Clamp values to MIN/MAX
-        def _clamp(val, mn = self.MIN, mx = self.MAX):
+        def _clamp(val):
             # handle min/max
-            return min(mx, max(mn, val))
+            return min(self.MAX, max(self.MIN, val))
 
-        if testing:
-            left_v = _clamp(left_v)
-            right_v = _clamp(right_v)
-        else:
-            left_v = _clamp(left_v, -100, 100)
-            right_v = _clamp(right_v, -100, 100)
+        left_v = _clamp(left_v)
+        right_v = _clamp(right_v)
 
 
         self.car.set_motor_speeds(FL = left_v, FR = right_v,
