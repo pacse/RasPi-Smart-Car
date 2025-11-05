@@ -41,14 +41,17 @@ class Controller:
         left_v = speed - turn
         right_v = speed + turn
 
-        # Clamp values to MIN/MAX in testing
-        if testing:
-            def _clamp(val):
-                # handle min/max
-                return min(self.MAX, max(self.MIN, val))
+        # Clamp values to MIN/MAX
+        def _clamp(val, mn = self.MIN, mx = self.MAX):
+            # handle min/max
+            return min(mx, max(mn, val))
 
+        if testing:
             left_v = _clamp(left_v)
             right_v = _clamp(right_v)
+        else:
+            left_v = _clamp(left_v, -100, 100)
+            right_v = _clamp(right_v, -100, 100)
 
 
         self.car.set_motor_speeds(FL = left_v, FR = right_v,
