@@ -1,8 +1,8 @@
 """
 Test motor module
 """
-from ..Code.motors import Car, Motor, Controller
-from ..Code.config import logging, MOTOR_PINS
+from ..motors import Car, Motor, Controller
+from ..config import logging, MOTOR_PINS
 from time import sleep
 
 DURATION = 1     # how long to run motors
