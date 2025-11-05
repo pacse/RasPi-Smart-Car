@@ -4,6 +4,8 @@ from Code.config import MOTOR_PINS
 
 import pygame as pg
 
+# do we want terminal display?
+headless = True
 
 # Initialize the car,
 #                controller,
@@ -36,7 +38,9 @@ try:
 
         joystick_handler.update()
 
-        joystick_handler.display()
+        if not headless:
+            joystick_handler.display()
+
         if not joystick_handler.strafe:
             controller.from_joystick(-joystick_handler.accel_y, -joystick_handler.accel_x)
         else:
