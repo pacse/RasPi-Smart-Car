@@ -1,12 +1,19 @@
 from .car import Car
-#from time import sleep
+
+
+# are we testing or running?
+testing = False
+
 
 class Controller:
     """
     Adds Controller functionality to the Car class.
     """
-    MAX = 30
-    MIN = -30
+
+    if testing:
+        MAX = 30   # Max pwm duty cycle
+        MIN = -30  # Min pwm duty cycle
+
 
     def __init__(self,
                  car: Car,
@@ -21,33 +28,31 @@ class Controller:
         """
         Control the car using a single joystick.
 
-        :param y_axis: Y-axis value from joystick (-100 to 100).
-        :param x_axis: X-axis value from joystick (-100 to 100).
+        :param y_axis: Y-axis value from joystick (-1 to 1).
+        :param x_axis: X-axis value from joystick (-1 to 1).
         """
 
         # Assumes y_axis and x_axis
 
-        speed = round(y_axis)                   # forward/backward speed
-        turn = round(x_axis * self.TURN_SCALE)  # turning adjustment
-                                                # TURN_SCALE is sensitivity
+        speed = round(y_axis * 100)                   # forward/backward speed
+        turn = round(x_axis * 100 * self.TURN_SCALE)  # turning adjustment
+                                                      # TURN_SCALE is sensitivity
 
         left_v = speed - turn
         right_v = speed + turn
 
-        # Clamp values to -100 to 100
-        if left_v > self.MAX:
-            left_v = self.MAX
-        elif left_v < self.MIN:
-            left_v = self.MIN
+        # Clamp values to MIN/MAX in testing
+        if testing:
+            def _clamp(val):
+                # handle min/max
+                return min(self.MAX, max(self.MIN, val))
 
-        if right_v > self.MAX:
-            right_v = self.MAX
-        elif right_v < self.MIN:
-            right_v = self.MIN
+            left_v = _clamp(left_v)
+            right_v = _clamp(right_v)
+
 
         self.car.set_motor_speeds(FL = left_v, FR = right_v,
                                   BL = left_v, BR = right_v)
-        #sleep(0.25)  # small delay to prevent overload
 
 
     def strafe_left(self, speed: int) -> None:
@@ -70,6 +75,7 @@ class Controller:
         self.car.set_motor_speeds(FL = speed, FR = -speed,
                               BL = -speed, BR = speed)
 
+
     def strafe_from_joystick(self, l_trigger, r_trigger) -> None:
         """
         Strafe the car left or right based on joystick input.
@@ -84,6 +90,7 @@ class Controller:
         else:
             r_trigger = round(r_trigger * 100)
             self.strafe_right(r_trigger)
+
 
     def cleanup(self) -> None:
         """
