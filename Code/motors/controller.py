@@ -20,7 +20,7 @@ class Controller:
 
     def __init__(self,
                  car: Car,
-                 turn_scale: float = 0.25
+                 turn_scale: float = 0.5
                 ) -> None:
 
         self.car = car
