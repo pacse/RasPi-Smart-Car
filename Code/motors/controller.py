@@ -25,6 +25,7 @@ class Controller:
 
         self.car = car
         self.TURN_SCALE = turn_scale
+        print(f'Controller: MAX: {self.MAX}, MIN: {self.MIN}, TURN_SCALE: {self.TURN_SCALE}')
 
 
     def from_joystick(self, y_axis: float, x_axis: float) -> None:
