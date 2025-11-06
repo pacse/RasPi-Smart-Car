@@ -21,6 +21,19 @@ NOTE: Assume controller address: F4:6A:D7:E0:3E:BC
 sudo bluetoothctl
 
 connect F4:6A:D7:E0:3E:BC
+```
+
+Code
+├── motors
+│   ├── __init__.py
+│   ├── core.py        # Core Motor control
+│   ├── car.py         # Expand Motor control
+│   └── controller.py  # Add controller support
+├── tests
+│   ├── __init__.py
+│   ├── motors.py      # test
+└── deepwell/          # Data storage
+
 
 # Original repo
 https://github.com/Freenove/Freenove_4WD_Smart_Car_Kit_for_Raspberry_Pi
