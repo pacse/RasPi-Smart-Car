@@ -14,7 +14,7 @@ class Motor:
 
     def __init__(self,
                  pins: tuple[int, int],
-                 pwm_freq: int = 100
+                 pwm_freq: int = 10_000
                 ) -> None:
         """
         Initialize the Motor controller.

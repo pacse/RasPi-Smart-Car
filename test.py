@@ -15,8 +15,8 @@ def run_all_tests():
 
 from Code.motors import Motor
 
-L = Motor((15, 16))
-R = Motor((11, 12), 1000)
+L = Motor((15, 16), 10)
+R = Motor((11, 12))
 
 L.set_speed(100)
 R.set_speed(100)
