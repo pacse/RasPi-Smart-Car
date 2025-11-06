@@ -8,11 +8,15 @@ testing = False
 class Controller:
     """
     Adds Controller functionality to the Car class.
+
+    :param car: The Car instance to control.
+    :param turn_scale: Scaling factor for turning sensitivity. Default: 0.5
     """
 
     if testing:
         MAX = 30   # Max pwm duty cycle
         MIN = -30  # Min pwm duty cycle
+
     else:
         MAX = 100  # Max pwm duty cycle
         MIN = -100 # Min pwm duty cycle
@@ -25,35 +29,34 @@ class Controller:
 
         self.car = car
         self.TURN_SCALE = turn_scale
-        print(f'Controller: MAX: {self.MAX}, MIN: {self.MIN}, TURN_SCALE: {self.TURN_SCALE}')
+
+        print((
+               f'Controller: MAX: {self.MAX}, '
+               f'MIN: {self.MIN}, '
+               f'TURN_SCALE: {self.TURN_SCALE}'
+             ))
 
 
     def from_joystick(self, y_axis: float, x_axis: float) -> None:
         """
-        Control the car using a single joystick.
+        Control the car from a joystick's input.
 
         :param y_axis: Y-axis value from joystick (-1 to 1).
         :param x_axis: X-axis value from joystick (-1 to 1).
         """
 
-        # Assumes y_axis and x_axis
-
+        # Assumes y_axis and x_axis are -1 to 1
         speed = round(y_axis * 100)                   # forward/backward speed
         turn = round(x_axis * 100 * self.TURN_SCALE)  # turning adjustment
                                                       # TURN_SCALE is sensitivity
 
-        left_v = speed - turn
-        right_v = speed + turn
 
-        # Clamp values to MIN/MAX
-        def _clamp(val):
-            # handle min/max
-            return min(self.MAX, max(self.MIN, val))
-
-        left_v = _clamp(left_v)
-        right_v = _clamp(right_v)
+        # Calculate speeds, clamping values to MIN/MAX
+        left_v = min(self.MAX, max(self.MIN, speed - turn))
+        right_v = min(self.MAX, max(self.MIN, speed + turn))
 
 
+        # Set motor speeds
         self.car.set_motor_speeds(FL = left_v, FR = right_v,
                                   BL = left_v, BR = right_v)
 

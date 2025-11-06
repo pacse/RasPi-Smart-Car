@@ -83,10 +83,11 @@ class Car:
         """
 
         try:
-            self.FL_motor.set_speed(FL)
-            self.FR_motor.set_speed(FR)
-            self.BL_motor.set_speed(BL)
-            self.BR_motor.set_speed(BR)
+            for motor, speed in zip(
+                self.motors,
+                (FL, FR, BL, BR)
+            ):
+                motor.set_speed(speed)
 
         except Exception as e: # catch errors from motor class
             raise RuntimeError("Error setting motor speeds:\n") from e
@@ -121,7 +122,7 @@ class Car:
         """
 
         for motor in self.motors:
-            motor.forward(speed)
+            motor.set_speed(speed)
 
     def backward(self, speed: int) -> None:
         """
@@ -131,7 +132,7 @@ class Car:
         """
 
         for motor in self.motors:
-            motor.backward(speed)
+            motor.set_speed(-speed)
 
 
     def turn_left(self, speed: int) -> None:

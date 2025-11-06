@@ -2,7 +2,10 @@
 Test motor module
 """
 from ..motors import Car, Motor, Controller
-from ..config import logging, MOTOR_PINS
+from ..config import MOTOR_PINS
+
+from . import logging
+
 from time import sleep
 
 DURATION = 1     # how long to run motors
@@ -73,10 +76,6 @@ def test_Motor():
 
     logger.debug('Creating Motor instance . . .')
     motor = Motor(MOTOR_PINS[0])
-
-
-    motor_action(motor, 'forward', motor.forward, 50)
-    motor_action(motor, 'backward', motor.backward, 75)
 
 
     logger.info('Ramping: -100% to 100% . . .')

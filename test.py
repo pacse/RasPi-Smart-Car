@@ -2,7 +2,7 @@
 Run tests from test suite
 """
 
-#from Code.tests import test_Controller, test_Motor, test_Car
+#from Code.tests.motors import test_Controller, test_Motor, test_Car
 
 def run_all_tests():
     """

@@ -9,40 +9,45 @@ class Motor:
     Core motor control class.
 
     :param pins: Two BOARD pin numbers for forward and backward control.
-    :param pwm_freq: The frequency for PWM control. Default: 100Hz
+    :param pwm_freq: The frequency for PWM control. Default: 10kHz
     """
 
     def __init__(self,
                  pins: tuple[int, int],
-                 pwm_freq: int = 10_000
+                 pwm_freq: int = 10_000,
+                 validating: bool = True # Are we validating inputs?
+                                       # False for use with Car & Controller classes
                 ) -> None:
         """
         Initialize the Motor controller.
 
         :param pins: Two BOARD pin numbers for forward and backward control.
-        :param pwm_freq: The frequency for PWM control. Default: 100Hz
+        :param pwm_freq: The frequency for PWM control. Default: 10kHz
+        :param validating: Whether to validate inputs. Default: True
         """
 
         # === Validation ===
+        if validating:
+            if len(pins) != 2:
+                raise ValueError("pins must contain exactly 2 pin numbers.")
 
-        if len(pins) != 2:
-            raise ValueError("pins must contain exactly 2 pin numbers.")
+            if not all(isinstance(pin, int) for pin in pins):
+                raise TypeError("All pin numbers must be integers.")
 
-        if not all(isinstance(pin, int) for pin in pins):
-            raise TypeError("All pin numbers must be integers.")
+            if not all((1 <= pin <= 40) for pin in pins):
+                raise ValueError("Pin numbers must be between 1 and 40.")
 
-        if not all((1 <= pin <= 40) for pin in pins):
-            raise ValueError("Pin numbers must be between 1 and 40.")
-
-        if not isinstance(pwm_freq, int) or pwm_freq <= 0:
-            raise ValueError("pwm_freq must be a positive integer.")
+            if not isinstance(pwm_freq, int) or pwm_freq <= 0:
+                raise ValueError("pwm_freq must be a positive integer.")
 
 
         # === Setup ===
 
+        self.validating = validating
         self.FORWARD, self.BACKWARD = pins
+        self.pins = pins
 
-        GPIO.setup(pins, GPIO.OUT)
+        GPIO.setup(self.pins, GPIO.OUT)
 
         # set up PWM for both directions
         self.pwm_forward = GPIO.PWM(self.FORWARD, pwm_freq)
@@ -84,39 +89,12 @@ class Motor:
         :param speed: Speed percentage (-100 - 100).
         """
 
-        self._validate_speed(speed)
-
-        if speed > 0:
-            self.pwm_backward.ChangeDutyCycle(0)
-            self.pwm_forward.ChangeDutyCycle(speed)
-
-        elif speed < 0:
-            self.pwm_forward.ChangeDutyCycle(0)
-            self.pwm_backward.ChangeDutyCycle(abs(speed))
-
-        else:
-            self.stop()
+        if self.validating:
+            self._validate_speed(speed)
 
 
-    def forward(self, speed: int) -> None:
-        """
-        Move the motor forward at the specified speed.
-
-        :param speed: Speed percentage (0 - 100).
-        """
-        self._validate_speed(speed, min=0, max=100)
-
-        self.set_speed(speed)
-
-    def backward(self, speed: int) -> None:
-        """
-        Move the motor backward at the specified speed.
-
-        :param speed: Speed percentage (0 - 100).
-        """
-        self._validate_speed(speed, min=0, max=100)
-
-        self.set_speed(-speed)
+        self.pwm_forward.ChangeDutyCycle(max(0,  speed))
+        self.pwm_backward.ChangeDutyCycle(max(0, -speed))
 
 
     def stop(self) -> None:
@@ -129,10 +107,12 @@ class Motor:
     def cleanup(self) -> None:
         """Clean up the GPIO pins for the motor."""
 
+        # ensure motor is stopped
         self.stop()
 
+        # stop PWM controllers
         self.pwm_forward.stop()
         self.pwm_backward.stop()
 
-        GPIO.cleanup(self.FORWARD)
-        GPIO.cleanup(self.BACKWARD)
+        # clean up GPIO pins
+        GPIO.cleanup(self.pins)

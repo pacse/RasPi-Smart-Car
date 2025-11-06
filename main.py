@@ -41,10 +41,8 @@ try:
         if not headless:
             joystick_handler.display()
 
-        if not joystick_handler.strafe:
-            controller.from_joystick(-joystick_handler.accel_y, -joystick_handler.accel_x)
-        else:
-            controller.strafe_from_joystick(joystick_handler.trig_L, joystick_handler.trig_R)
+        controller.from_joystick(-joystick_handler.accel_y, -joystick_handler.accel_x)
+
 
 finally:
     controller.cleanup()
