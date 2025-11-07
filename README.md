@@ -24,15 +24,19 @@ connect F4:6A:D7:E0:3E:BC
 ```
 
 Code
+├── __init__.py
+├── config.py          # Config & variables
+├── joytick_handler.py # Interface with Xbox joystick
 ├── motors
 │   ├── __init__.py
 │   ├── core.py        # Core Motor control
 │   ├── car.py         # Expand Motor control
 │   └── controller.py  # Add controller support
-├── tests
-│   ├── __init__.py
-│   ├── motors.py      # test
-└── deepwell/          # Data storage
+└── tests
+    ├── __init__.py
+    └── motors.py      # Test motor control
+test.py                # Run tests
+main.py                # Bring it all together
 
 
 # Original repo
