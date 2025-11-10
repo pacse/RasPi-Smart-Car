@@ -3,15 +3,13 @@ A customixed version built of Freenove's base to add controller support and etc
 
 ## How to configure a pi
 ```bash
+cd /path/to/desired/directory
+
 git clone https://github.com/pacse/RasPi-Smart-Car.git
 
-sudo raspi-config # enable i2c in interface options
+cd RasPi-Smart-Car
 
-sudo apt-get install i2c-tools
-sudo apt-get install python3-smbus
-
-i2cdetect -y 1 # ensure you see 40 & 48
-
+pip install -r requirements.txt
 ```
 
 ## Connect to bluetooth controller
@@ -20,9 +18,19 @@ NOTE: Assume controller address: F4:6A:D7:E0:3E:BC
 ```bash
 sudo bluetoothctl
 
-connect F4:6A:D7:E0:3E:BC
+# To find controller address
+scan on
+# Find Xbox Controller
+
+pair F4:6A:D7:E0:3E:BC     # or correct address
+trust F4:6A:D7:E0:3E:BC    # or correct address
+connect F4:6A:D7:E0:3E:BC  # or correct address
+
+exit # leave bluetooth ctl
 ```
 
+## File Structure
+```
 Code
 ├── __init__.py
 ├── config.py          # Config & variables
@@ -37,7 +45,7 @@ Code
     └── motors.py      # Test motor control
 test.py                # Run tests
 main.py                # Bring it all together
-
+```
 
 # Original repo
 https://github.com/Freenove/Freenove_4WD_Smart_Car_Kit_for_Raspberry_Pi
