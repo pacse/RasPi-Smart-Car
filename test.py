@@ -3,6 +3,8 @@ Run tests from test suite
 """
 
 #from Code.tests.motors import test_Controller, test_Motor, test_Car
+from Code.config import MOTOR_PINS
+from time import sleep
 
 def run_all_tests():
     """
@@ -13,16 +15,11 @@ def run_all_tests():
     #test_Controller()
     #print("All tests pass?")
 
-from Code.motors import Motor
+from Code.motors import Car
 
-L = Motor((15, 16), 10)
-R = Motor((11, 12))
+car = Car(MOTOR_PINS)
 
-L.set_speed(100)
-R.set_speed(100)
-import time
-time.sleep(5)
-L.set_speed(0)
-R.set_speed(0)
-L.cleanup()
-R.cleanup()
+car.forward(50)
+sleep(10)
+car.stop_all_motors()
+car.cleanup()
