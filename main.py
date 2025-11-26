@@ -41,7 +41,7 @@ try:
         if not headless:
             joystick_handler.display()
 
-        controller.from_joystick(-joystick_handler.accel_y, -joystick_handler.accel_x)
+        controller.move_from_joystick(-joystick_handler.accel_y, -joystick_handler.accel_x)
 
 
 finally:

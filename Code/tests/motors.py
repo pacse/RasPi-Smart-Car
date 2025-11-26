@@ -181,7 +181,7 @@ def test_Controller():
     for y_axis, x_axis in inputs:
         controller_action(controller,
                           'from_joystick', RAMP_DELAY,
-                          controller.from_joystick,
+                          controller.move_from_joystick,
                           y_axis, x_axis
                          )
 

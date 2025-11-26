@@ -37,7 +37,7 @@ class Controller:
              ))
 
 
-    def from_joystick(self, y_axis: float, x_axis: float) -> None:
+    def move_from_joystick(self, y_axis: float, x_axis: float) -> None:
         """
         Control the car from a joystick's input.
 
